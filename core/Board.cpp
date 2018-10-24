@@ -1,14 +1,10 @@
 #include "Board.hpp"
 
-Board::Board(unsigned int size) {}
+Board::Board(const unsigned int size) : board_width(size), board_height(size) {}
 
-int Board::width() const noexcept {
-  return 8;
-}
+int Board::width() const noexcept { return board_width; }
 
-int Board::height() const noexcept {
-  return 8;
-}
+int Board::height() const noexcept { return board_height; }
 
 bool Board::isValidCell(int x, int y) const noexcept {}
 
