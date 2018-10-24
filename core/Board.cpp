@@ -1,5 +1,7 @@
 #include "Board.hpp"
 
+Board::Board(unsigned int size) {}
+
 int Board::width() const noexcept {
   return 8;
 }
