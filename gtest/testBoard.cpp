@@ -34,3 +34,19 @@ TEST(testBoard, checkAllValidCells) {
     for (int y = 0; y < larger_size; ++y)
       ASSERT_TRUE(board2.isValidCell(x, y));
 }
+
+TEST(testBoard, checkCellsOutsideBorderInvalid) {
+  const unsigned int default_size = 8;
+  Board board;
+
+  // cells above top edge & below bottom edge
+  for (int x = 0; x < default_size; ++x) {
+    EXPECT_FALSE(board.isValidCell(x, -1));
+    EXPECT_FALSE(board.isValidCell(x, board.height()));
+  }
+  // cells left of left edge & right of right  edge
+  for (int y = 0; y < default_size; ++y) {
+    EXPECT_FALSE(board.isValidCell(-1, y));
+    EXPECT_FALSE(board.isValidCell(board.width(), y));
+  }
+}
