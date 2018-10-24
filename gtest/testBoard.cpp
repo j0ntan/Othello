@@ -20,3 +20,17 @@ TEST(testBoard, largerBoardReturnsCorrectSize) {
   EXPECT_EQ(size, board.width());
   EXPECT_EQ(size, board.height());
 }
+
+TEST(testBoard, checkAllValidCells) {
+  const unsigned int default_size = 8;
+  Board board1;
+  for (int x = 0; x < default_size; ++x)
+    for (int y = 0; y < default_size; ++y)
+      ASSERT_TRUE(board1.isValidCell(x, y));
+
+  const unsigned int larger_size = 12;
+  Board board2(larger_size);
+  for (int x = 0; x < larger_size; ++x)
+    for (int y = 0; y < larger_size; ++y)
+      ASSERT_TRUE(board2.isValidCell(x, y));
+}
