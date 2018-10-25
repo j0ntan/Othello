@@ -110,3 +110,14 @@ TEST(testBoard, placeTileInNonEmptyCellThrowsException) {
   board.placeTile(0, 0, OthelloCell::white);
   EXPECT_THROW(board.placeTile(0, 0, OthelloCell::black), OthelloException);
 }
+
+TEST(testBoard, flipAPlacedTile) {
+  Board board;
+  EXPECT_EQ(OthelloCell::empty, board.cellAt(0, 0));
+  board.placeTile(0, 0, OthelloCell::white);
+  EXPECT_EQ(OthelloCell::white, board.cellAt(0, 0));
+  board.flipTile(0, 0);
+  EXPECT_EQ(OthelloCell::black, board.cellAt(0, 0));
+  board.flipTile(0, 0);
+  EXPECT_EQ(OthelloCell::white, board.cellAt(0, 0));
+}

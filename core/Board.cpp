@@ -42,4 +42,8 @@ void Board::placeTile(int x, int y, OthelloCell cell) {
   setCellAt(x, y, cell); // may throw if (x, y) invalid
 }
 
-void Board::flipTile(int x, int y) {}
+void Board::flipTile(int x, int y) {
+  setCellAt(x, y,
+            (cellAt(x, y) == OthelloCell::white) ? OthelloCell::black
+                                                 : OthelloCell::white);
+}
