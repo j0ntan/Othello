@@ -103,3 +103,10 @@ TEST(testBoard, placeTileInInvalidCellThrowsException) {
   Board board;
   EXPECT_THROW(board.placeTile(-1, -1, OthelloCell::white), OthelloException);
 }
+
+TEST(testBoard, placeTileInNonEmptyCellThrowsException) {
+  Board board;
+  EXPECT_EQ(OthelloCell::empty, board.cellAt(0, 0));
+  board.placeTile(0, 0, OthelloCell::white);
+  EXPECT_THROW(board.placeTile(0, 0, OthelloCell::black), OthelloException);
+}

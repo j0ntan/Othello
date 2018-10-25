@@ -35,6 +35,10 @@ void Board::setCellAt(int x, int y, OthelloCell cell) {
 }
 
 void Board::placeTile(int x, int y, OthelloCell cell) {
+  if (cellAt(x, y) != OthelloCell::empty)
+    throw OthelloException("Cell at (" + std::to_string(x) + ", " +
+                           std::to_string(y) +
+                           ") already has a tile, cannot place another tile.");
   setCellAt(x, y, cell); // may throw if (x, y) invalid
 }
 
