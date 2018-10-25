@@ -45,9 +45,6 @@ public:
   void flipTile(int x, int y) final;
 
 private:
-  const unsigned int board_width;
-  const unsigned int board_height;
-
   std::vector<std::vector<OthelloCell>> cells;
 };
 

@@ -26,6 +26,15 @@ TEST(testBoard, largerBoardReturnsCorrectSize) {
   EXPECT_EQ(size, board.height());
 }
 
+TEST(testBoard, nonSquareBoardReturnsCorrectSize) {
+  const unsigned int width = 4;
+  const unsigned int height = 6;
+  Board board(width, height);
+
+  EXPECT_EQ(width, board.width());
+  EXPECT_EQ(height, board.height());
+}
+
 TEST(testBoard, checkAllValidCells) {
   const unsigned int default_size = 8;
   Board board1;

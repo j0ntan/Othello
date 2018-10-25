@@ -2,23 +2,22 @@
 #include "othellogame/OthelloException.hpp"
 #include <string>
 
-Board::Board(const unsigned int size) : board_width(size), board_height(size) {
+Board::Board(const unsigned int size) {
   cells = std::vector<std::vector<OthelloCell>>(
       size, std::vector<OthelloCell>(size, OthelloCell::empty));
 }
 
-Board::Board(const unsigned int width, const unsigned int height)
-    : board_width(width), board_height(height) {
+Board::Board(const unsigned int width, const unsigned int height) {
   cells = std::vector<std::vector<OthelloCell>>(
       width, std::vector<OthelloCell>(height, OthelloCell::empty));
 }
 
-int Board::width() const noexcept { return board_width; }
+int Board::width() const noexcept { return cells.size(); }
 
-int Board::height() const noexcept { return board_height; }
+int Board::height() const noexcept { return cells[0].size(); }
 
 bool Board::isValidCell(int x, int y) const noexcept {
-  return x >= 0 && y >= 0 && x < board_width && y < board_height;
+  return x >= 0 && y >= 0 && x < cells.size() && y < cells[0].size();
 }
 
 OthelloCell Board::cellAt(int x, int y) const {
