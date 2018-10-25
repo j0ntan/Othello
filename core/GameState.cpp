@@ -6,7 +6,7 @@ const OthelloBoard &GameState::board() const noexcept {
   return reference_board;
 }
 
-int GameState::blackScore() const noexcept {}
+int GameState::blackScore() const noexcept { return 0; }
 
 int GameState::whiteScore() const noexcept {}
 

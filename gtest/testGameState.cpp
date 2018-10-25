@@ -14,3 +14,9 @@ TEST(testGameState, boardIsIndependantFromGameState) {
   board.flipTile(0, 0);
   EXPECT_NE(gameState.board().cellAt(0, 0), board.cellAt(0, 0));
 }
+
+TEST(testGameState, blackScoreIsZeroForEmptyBoard) {
+  Board board;
+  GameState gameState(board);
+  EXPECT_EQ(0, gameState.blackScore());
+}
