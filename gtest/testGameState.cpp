@@ -50,3 +50,9 @@ TEST(testGameState, whiteScoreCorrectForPopulatedBoard) {
   GameState gameState(board);
   EXPECT_EQ(4, gameState.whiteScore());
 }
+
+TEST(testGameState, blackGoesFirstForDefaultGameState) {
+  GameState gameState(Board(8));
+  EXPECT_TRUE(gameState.isBlackTurn());
+  EXPECT_FALSE(gameState.isWhiteTurn());
+}

@@ -27,9 +27,9 @@ int GameState::whiteScore() const noexcept {
 
 bool GameState::isGameOver() const noexcept {}
 
-bool GameState::isBlackTurn() const noexcept {}
+bool GameState::isBlackTurn() const noexcept { return true; }
 
-bool GameState::isWhiteTurn() const noexcept {}
+bool GameState::isWhiteTurn() const noexcept { return false; }
 
 bool GameState::isValidMove(int x, int y) const {}
 
