@@ -16,5 +16,6 @@ target_include_directories(testGameState
         PUBLIC ${gtest_SOURCE_DIR}/include)
 target_link_libraries(testGameState
         PUBLIC libGameState
+        PUBLIC libBoard
         PUBLIC testgtestmain
         PUBLIC gtest)

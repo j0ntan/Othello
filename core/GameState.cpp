@@ -1,6 +1,10 @@
 #include "GameState.hpp"
 
-const OthelloBoard &GameState::board() const noexcept {}
+GameState::GameState(const Board &board) : reference_board(board) {}
+
+const OthelloBoard &GameState::board() const noexcept {
+  return reference_board;
+}
 
 int GameState::blackScore() const noexcept {}
 

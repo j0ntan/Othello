@@ -1,11 +1,15 @@
 #ifndef GAMESTATE_HPP
 #define GAMESTATE_HPP
 
-#include "othellogame/OthelloBoard.hpp"
+#include "core/Board.hpp"
 #include "othellogame/OthelloGameState.hpp"
+
+class OthelloBoard;
 
 class GameState : public OthelloGameState {
 public:
+  GameState(const Board &board);
+
   ~GameState() final = default;
 
   // board() returns a reference to a constant OthelloBoard describing
@@ -44,6 +48,7 @@ public:
   std::unique_ptr<OthelloGameState> clone() const final;
 
 private:
+  Board reference_board;
 };
 
 #endif // GAMESTATE_HPP
