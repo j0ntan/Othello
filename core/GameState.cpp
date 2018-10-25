@@ -9,6 +9,10 @@ const int countTiles(const OthelloBoard &board, OthelloCell tile) noexcept {
         ++counter;
   return counter;
 }
+
+inline bool chosenCellIsEmpty(const Board &board, int x, int y) {
+  return board.cellAt(x, y) == OthelloCell::empty;
+}
 } // namespace
 
 GameState::GameState(const Board &board, bool blackMovesFirst)
@@ -32,7 +36,9 @@ bool GameState::isBlackTurn() const noexcept { return blacksTurn; }
 
 bool GameState::isWhiteTurn() const noexcept { return !blacksTurn; }
 
-bool GameState::isValidMove(int x, int y) const {}
+bool GameState::isValidMove(int x, int y) const {
+  return chosenCellIsEmpty(reference_board, x, y);
+}
 
 void GameState::makeMove(int x, int y) {}
 

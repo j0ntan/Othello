@@ -62,3 +62,17 @@ TEST(testGameState, setWhiteGoesFirstForEmptyGameState) {
   EXPECT_FALSE(gameState.isBlackTurn());
   EXPECT_TRUE(gameState.isWhiteTurn());
 }
+
+TEST(testGameState, occupiedCellIsNotValidMove) {
+  Board board;
+  board.placeTile(3, 3, OthelloCell::white);
+  board.placeTile(4, 3, OthelloCell::black);
+  board.placeTile(3, 4, OthelloCell::black);
+  board.placeTile(4, 4, OthelloCell::white);
+  GameState gameState(board);
+
+  EXPECT_FALSE(gameState.isValidMove(3, 3));
+  EXPECT_FALSE(gameState.isValidMove(4, 3));
+  EXPECT_FALSE(gameState.isValidMove(3, 4));
+  EXPECT_FALSE(gameState.isValidMove(4, 4));
+}
