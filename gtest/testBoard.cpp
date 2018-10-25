@@ -50,3 +50,11 @@ TEST(testBoard, checkCellsOutsideBorderInvalid) {
     EXPECT_FALSE(board.isValidCell(board.width(), y));
   }
 }
+
+TEST(testBoard, defaultConstructedBoardHasAllEmptyCells) {
+  Board board;
+
+  for (int x = 0; x < board.width(); ++x)
+    for (int y = 0; y < board.height(); ++y)
+      EXPECT_EQ(OthelloCell::empty, board.cellAt(x, y));
+}

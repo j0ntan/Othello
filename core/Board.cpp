@@ -10,7 +10,7 @@ bool Board::isValidCell(int x, int y) const noexcept {
   return x >= 0 && y >= 0 && x < board_width && y < board_height;
 }
 
-OthelloCell Board::cellAt(int x, int y) const {}
+OthelloCell Board::cellAt(int x, int y) const { return OthelloCell::empty; }
 
 void Board::setCellAt(int x, int y, OthelloCell cell) {}
 
