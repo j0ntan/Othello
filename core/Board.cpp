@@ -22,7 +22,12 @@ OthelloCell Board::cellAt(int x, int y) const {
   return cells[x][y];
 }
 
-void Board::setCellAt(int x, int y, OthelloCell cell) { cells[x][y] = cell; }
+void Board::setCellAt(int x, int y, OthelloCell cell) {
+  if (!isValidCell(x, y))
+    throw OthelloException("Cell at (" + std::to_string(x) + ", " +
+                           std::to_string(y) + ") is invalid, cannot set.");
+  cells[x][y] = cell;
+}
 
 void Board::placeTile(int x, int y, OthelloCell cell) {}
 

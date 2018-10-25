@@ -73,3 +73,8 @@ TEST(testBoard, setSingleCellAndVerify) {
   board.setCellAt(0, 0, OthelloCell::white);
   EXPECT_EQ(OthelloCell::white, board.cellAt(0, 0));
 }
+
+TEST(testBoard, setInvalidCellThrowsException) {
+  Board board;
+  EXPECT_THROW(board.setCellAt(-1, -1, OthelloCell::white), OthelloException);
+}
