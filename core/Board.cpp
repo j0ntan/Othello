@@ -34,6 +34,8 @@ void Board::setCellAt(int x, int y, OthelloCell cell) {
   cells[x][y] = cell;
 }
 
-void Board::placeTile(int x, int y, OthelloCell cell) { setCellAt(x, y, cell); }
+void Board::placeTile(int x, int y, OthelloCell cell) {
+  setCellAt(x, y, cell); // may throw if (x, y) invalid
+}
 
 void Board::flipTile(int x, int y) {}
