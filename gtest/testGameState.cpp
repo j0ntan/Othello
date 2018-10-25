@@ -56,3 +56,9 @@ TEST(testGameState, blackGoesFirstForDefaultGameState) {
   EXPECT_TRUE(gameState.isBlackTurn());
   EXPECT_FALSE(gameState.isWhiteTurn());
 }
+
+TEST(testGameState, setWhiteGoesFirstForEmptyGameState) {
+  GameState gameState(Board(), false);
+  EXPECT_FALSE(gameState.isBlackTurn());
+  EXPECT_TRUE(gameState.isWhiteTurn());
+}

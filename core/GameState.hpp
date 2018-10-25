@@ -8,7 +8,7 @@ class OthelloBoard;
 
 class GameState : public OthelloGameState {
 public:
-  GameState(const Board &board);
+  GameState(const Board &board, bool blackMovesFirst = true);
 
   ~GameState() final = default;
 
@@ -49,6 +49,7 @@ public:
 
 private:
   Board reference_board;
+  bool blacksTurn;
 };
 
 #endif // GAMESTATE_HPP

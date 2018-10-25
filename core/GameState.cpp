@@ -11,7 +11,8 @@ const int countTiles(const OthelloBoard &board, OthelloCell tile) noexcept {
 }
 } // namespace
 
-GameState::GameState(const Board &board) : reference_board(board) {}
+GameState::GameState(const Board &board, bool blackMovesFirst)
+    : reference_board(board), blacksTurn(blackMovesFirst) {}
 
 const OthelloBoard &GameState::board() const noexcept {
   return reference_board;
@@ -27,9 +28,9 @@ int GameState::whiteScore() const noexcept {
 
 bool GameState::isGameOver() const noexcept {}
 
-bool GameState::isBlackTurn() const noexcept { return true; }
+bool GameState::isBlackTurn() const noexcept { return blacksTurn; }
 
-bool GameState::isWhiteTurn() const noexcept { return false; }
+bool GameState::isWhiteTurn() const noexcept { return !blacksTurn; }
 
 bool GameState::isValidMove(int x, int y) const {}
 
