@@ -1,5 +1,6 @@
 #include "core/Board.cpp"
 #include "core/Board.hpp"
+#include "othellogame/OthelloException.hpp"
 #include <gtest/gtest.h>
 
 TEST(testBoard, defaultConstructedBoardIs8x8) {
@@ -57,4 +58,9 @@ TEST(testBoard, defaultConstructedBoardHasAllEmptyCells) {
   for (int x = 0; x < board.width(); ++x)
     for (int y = 0; y < board.height(); ++y)
       EXPECT_EQ(OthelloCell::empty, board.cellAt(x, y));
+}
+
+TEST(testBoard, cellOutsideBorderThrowsException) {
+  Board board;
+  EXPECT_THROW(board.cellAt(board.width(), board.height()), OthelloException);
 }
