@@ -1,5 +1,6 @@
 #include "Board.hpp"
 #include "othellogame/OthelloException.hpp"
+#include <iostream>
 #include <string>
 
 Board::Board(const unsigned int size) {
@@ -49,4 +50,46 @@ void Board::flipTile(int x, int y) {
   setCellAt(x, y,
             (cellAt(x, y) == OthelloCell::white) ? OthelloCell::black
                                                  : OthelloCell::white);
+}
+
+void Board::print() const noexcept {
+  const int board_width = width();
+  const int board_height = height();
+  const char white = 'w';
+  const char black = 'b';
+
+  // print top border
+  for (int x = 0; x < board_width; ++x) {
+    std::cout << "*-";
+  }
+  std::cout << "*\n";
+
+  // print row by row
+  for (int y = 0; y < board_height; ++y) {
+    std::cout << '|'; // left border wall
+
+    // print cell value & right wall
+    for (int x = 0; x < board_width; ++x) {
+      switch (cellAt(x, y)) {
+      case OthelloCell::empty:
+        std::cout << ' ';
+        break;
+      case OthelloCell::white:
+        std::cout << white;
+        break;
+      case OthelloCell::black:
+        std::cout << black;
+        break;
+      }
+      std::cout << '|';
+    }
+    std::cout << '\n';
+
+    // print bottom wall
+    std::cout << '*';
+    for (int x = 0; x < board_width; ++x)
+      std::cout << "-*";
+    std::cout << '\n';
+  }
+  std::cout << '\n';
 }

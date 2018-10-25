@@ -44,6 +44,8 @@ public:
   // occupied by a tile, an OthelloException is thrown.
   void flipTile(int x, int y) final;
 
+  void print() const noexcept;
+
 private:
   std::vector<std::vector<OthelloCell>> cells;
 };
