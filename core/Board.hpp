@@ -9,6 +9,8 @@ class Board : public OthelloBoard {
 public:
   Board(unsigned int size = 8);
 
+  Board(unsigned int width, unsigned int height);
+
   ~Board() final = default;
 
   // width() returns the width of this Othello board.

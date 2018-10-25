@@ -14,6 +14,10 @@ TEST(testBoard, canConstructDifferentSizeBoards) {
   Board board1(10), board2(12), board3(15);
 }
 
+TEST(testBoard, canConstructNonSquareBoards) {
+  Board board1(3, 4), board2(4, 3);
+}
+
 TEST(testBoard, largerBoardReturnsCorrectSize) {
   const unsigned int size = 10;
   Board board(size);

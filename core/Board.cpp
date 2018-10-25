@@ -7,6 +7,12 @@ Board::Board(const unsigned int size) : board_width(size), board_height(size) {
       size, std::vector<OthelloCell>(size, OthelloCell::empty));
 }
 
+Board::Board(const unsigned int width, const unsigned int height)
+    : board_width(width), board_height(height) {
+  cells = std::vector<std::vector<OthelloCell>>(
+      width, std::vector<OthelloCell>(height, OthelloCell::empty));
+}
+
 int Board::width() const noexcept { return board_width; }
 
 int Board::height() const noexcept { return board_height; }
