@@ -126,3 +126,9 @@ TEST(testBoard, flipInvalidCellThrowsException) {
   Board board;
   EXPECT_THROW(board.flipTile(-1, -1), OthelloException);
 }
+
+TEST(testBoard, flipEmptyCellThrowsException) {
+  Board board;
+  EXPECT_EQ(OthelloCell::empty, board.cellAt(0,0));
+  EXPECT_THROW(board.flipTile(0, 0), OthelloException);
+}

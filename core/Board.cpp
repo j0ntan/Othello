@@ -43,6 +43,9 @@ void Board::placeTile(int x, int y, OthelloCell cell) {
 }
 
 void Board::flipTile(int x, int y) {
+  if (cellAt(x, y) == OthelloCell::empty)
+    throw OthelloException("Cannot flip empty cell at (" + std::to_string(x) +
+                           ", " + std::to_string(y) + ").");
   setCellAt(x, y,
             (cellAt(x, y) == OthelloCell::white) ? OthelloCell::black
                                                  : OthelloCell::white);
