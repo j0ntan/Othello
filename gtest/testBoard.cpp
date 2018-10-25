@@ -132,3 +132,17 @@ TEST(testBoard, flipEmptyCellThrowsException) {
   EXPECT_EQ(OthelloCell::empty, board.cellAt(0,0));
   EXPECT_THROW(board.flipTile(0, 0), OthelloException);
 }
+
+TEST(testBoard, copyPopulatedBoard) {
+  Board board;
+  board.placeTile(0,0, OthelloCell::black);
+  board.placeTile(1,1, OthelloCell::white);
+  board.placeTile(2,2, OthelloCell::black);
+  board.placeTile(3,3, OthelloCell::white);
+
+  Board copy = board;
+  EXPECT_EQ(OthelloCell::black, copy.cellAt(0,0));
+  EXPECT_EQ(OthelloCell::white, copy.cellAt(1,1));
+  EXPECT_EQ(OthelloCell::black, copy.cellAt(2,2));
+  EXPECT_EQ(OthelloCell::white, copy.cellAt(3,3));
+}
