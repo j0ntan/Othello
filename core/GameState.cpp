@@ -21,7 +21,7 @@ int GameState::blackScore() const noexcept {
   return countTiles(board(), OthelloCell::black);
 }
 
-int GameState::whiteScore() const noexcept {}
+int GameState::whiteScore() const noexcept { return 0; }
 
 bool GameState::isGameOver() const noexcept {}
 

@@ -32,3 +32,9 @@ TEST(testGameState, blackScoreCorrectForPopulatedBoard) {
   GameState gameState(board);
   EXPECT_EQ(4, gameState.blackScore());
 }
+
+TEST(testGameState, whiteScoreIsZeroForEmptyBoard) {
+  Board board;
+  GameState gameState(board);
+  EXPECT_EQ(0, gameState.whiteScore());
+}
