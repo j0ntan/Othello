@@ -3,6 +3,7 @@
 
 #include "othellogame/OthelloBoard.hpp"
 #include "othellogame/OthelloCell.hpp"
+#include <vector>
 
 class Board : public OthelloBoard {
 public:
@@ -44,6 +45,8 @@ public:
 private:
   const unsigned int board_width;
   const unsigned int board_height;
+
+  std::vector<std::vector<OthelloCell>> cells;
 };
 
 #endif // BOARD_HPP

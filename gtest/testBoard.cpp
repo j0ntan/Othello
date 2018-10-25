@@ -64,3 +64,12 @@ TEST(testBoard, cellOutsideBorderThrowsException) {
   Board board;
   EXPECT_THROW(board.cellAt(board.width(), board.height()), OthelloException);
 }
+
+TEST(testBoard, setSingleCellAndVerify) {
+  Board board;
+  EXPECT_EQ(OthelloCell::empty, board.cellAt(0, 0));
+  board.setCellAt(0, 0, OthelloCell::black);
+  EXPECT_EQ(OthelloCell::black, board.cellAt(0, 0));
+  board.setCellAt(0, 0, OthelloCell::white);
+  EXPECT_EQ(OthelloCell::white, board.cellAt(0, 0));
+}

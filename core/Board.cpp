@@ -2,7 +2,10 @@
 #include "othellogame/OthelloException.hpp"
 #include <string>
 
-Board::Board(const unsigned int size) : board_width(size), board_height(size) {}
+Board::Board(const unsigned int size) : board_width(size), board_height(size) {
+  cells = std::vector<std::vector<OthelloCell>>(
+      size, std::vector<OthelloCell>(size, OthelloCell::empty));
+}
 
 int Board::width() const noexcept { return board_width; }
 
@@ -16,10 +19,10 @@ OthelloCell Board::cellAt(int x, int y) const {
   if (!isValidCell(x, y))
     throw OthelloException("Cell at (" + std::to_string(x) + ", " +
                            std::to_string(y) + ") is invalid, cannot access.");
-  return OthelloCell::empty;
+  return cells[x][y];
 }
 
-void Board::setCellAt(int x, int y, OthelloCell cell) {}
+void Board::setCellAt(int x, int y, OthelloCell cell) { cells[x][y] = cell; }
 
 void Board::placeTile(int x, int y, OthelloCell cell) {}
 
