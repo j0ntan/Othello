@@ -38,3 +38,15 @@ TEST(testGameState, whiteScoreIsZeroForEmptyBoard) {
   GameState gameState(board);
   EXPECT_EQ(0, gameState.whiteScore());
 }
+
+TEST(testGameState, whiteScoreCorrectForPopulatedBoard) {
+  Board board;
+  board.placeTile(0, 0, OthelloCell::white);
+  board.placeTile(1, 1, OthelloCell::white);
+  board.placeTile(2, 2, OthelloCell::white);
+  board.placeTile(3, 3, OthelloCell::white);
+  board.placeTile(4, 4, OthelloCell::black);
+
+  GameState gameState(board);
+  EXPECT_EQ(4, gameState.whiteScore());
+}
