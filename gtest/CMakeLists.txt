@@ -19,3 +19,12 @@ target_link_libraries(testGameState
         PUBLIC libBoard
         PUBLIC testgtestmain
         PUBLIC gtest)
+
+add_executable(testRunAll gtestmain.cpp testBoard.cpp testGameState.cpp)
+target_include_directories(testRunAll
+        PUBLIC ${CMAKE_SOURCE_DIR}
+        PUBLIC ${gtest_SOURCE_DIR}/include)
+target_link_libraries(testRunAll
+        PUBLIC libGameState
+        PUBLIC libBoard
+        PUBLIC gtest)
