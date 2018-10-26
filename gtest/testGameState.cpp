@@ -117,3 +117,16 @@ TEST(testGameState, singleValidMoveInPositiveDiagonalPosition) {
   EXPECT_TRUE(gameState.isValidMove(5, 2));
   EXPECT_FALSE(gameState.isValidMove(2, 5));
 }
+
+TEST(testGameState, singleValidMoveInNegativeDiagonalPosition) {
+  Board board;
+  board.placeTile(3, 3, OthelloCell::white);
+  board.placeTile(4, 3, OthelloCell::black);
+  board.placeTile(3, 4, OthelloCell::black);
+  board.placeTile(4, 4, OthelloCell::white);
+  board.placeTile(5, 5, OthelloCell::black);
+  GameState gameState(board);
+
+  EXPECT_TRUE(gameState.isValidMove(2, 2));
+  EXPECT_FALSE(gameState.isValidMove(6, 6));
+}
