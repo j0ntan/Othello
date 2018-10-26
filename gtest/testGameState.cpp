@@ -143,3 +143,16 @@ TEST(testGameState, makeMoveModifiesChosenCell) {
   gameState.makeMove(3, 2);
   EXPECT_EQ(OthelloCell::black, gameState.board().cellAt(3, 2));
 }
+
+TEST(testGameState, whitesTurnAfterFirstBlackMove) {
+  Board board;
+  board.placeTile(3, 3, OthelloCell::white);
+  board.placeTile(4, 3, OthelloCell::black);
+  board.placeTile(3, 4, OthelloCell::black);
+  board.placeTile(4, 4, OthelloCell::white);
+  GameState gameState(board);
+
+  EXPECT_TRUE(gameState.isBlackTurn());
+  gameState.makeMove(3, 2);
+  EXPECT_TRUE(gameState.isWhiteTurn());
+}

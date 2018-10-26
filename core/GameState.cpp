@@ -152,6 +152,7 @@ bool GameState::isValidMove(int x, int y) const {
 
 void GameState::makeMove(int x, int y) {
   reference_board.placeTile(x, y, OthelloCell::black);
+  blacksTurn = !blacksTurn;
 }
 
 std::unique_ptr<OthelloGameState> GameState::clone() const {}
