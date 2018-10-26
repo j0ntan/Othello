@@ -150,6 +150,8 @@ bool GameState::isValidMove(int x, int y) const {
           negativeDiagonalIsValid(*this, x, y));
 }
 
-void GameState::makeMove(int x, int y) {}
+void GameState::makeMove(int x, int y) {
+  reference_board.placeTile(x, y, OthelloCell::black);
+}
 
 std::unique_ptr<OthelloGameState> GameState::clone() const {}
