@@ -151,7 +151,10 @@ bool GameState::isValidMove(int x, int y) const {
 }
 
 void GameState::makeMove(int x, int y) {
-  reference_board.placeTile(x, y, OthelloCell::black);
+  if (isBlackTurn())
+    reference_board.placeTile(x, y, OthelloCell::black);
+  else
+    reference_board.placeTile(x, y, OthelloCell::white);
   blacksTurn = !blacksTurn;
 }
 
