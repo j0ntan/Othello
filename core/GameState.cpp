@@ -37,6 +37,30 @@ bool rowIsValid(const GameState &gameState, const int x, const int y) {
 
   return false; // else, invalid
 }
+
+bool columnIsValid(const GameState &gameState, const int x, const int y) {
+  int y_n = y;
+  const OthelloCell opposing =
+      gameState.isBlackTurn() ? OthelloCell::white : OthelloCell::black;
+
+  // check top side
+  while (--y_n >= 0 && gameState.board().cellAt(x, y_n) == opposing)
+    ;
+  if (gameState.board().cellAt(x, y_n) != OthelloCell::empty &&
+      gameState.board().cellAt(x, y_n + 1) == opposing) // found anchor
+    return true;
+
+  // else, check bottom side
+  y_n = y;
+  const int height = gameState.board().height();
+  while (++y_n < height && gameState.board().cellAt(x, y_n) == opposing)
+    ;
+  if (gameState.board().cellAt(x, y_n) != OthelloCell::empty &&
+      gameState.board().cellAt(x, y_n - 1) == opposing) // found anchor
+    return true;
+
+  return false; // else, invalid
+}
 } // namespace
 
 GameState::GameState(const Board &board, bool blackMovesFirst)
@@ -61,7 +85,8 @@ bool GameState::isBlackTurn() const noexcept { return blacksTurn; }
 bool GameState::isWhiteTurn() const noexcept { return !blacksTurn; }
 
 bool GameState::isValidMove(int x, int y) const {
-  return chosenCellIsEmpty(reference_board, x, y) && rowIsValid(*this, x, y);
+  return chosenCellIsEmpty(reference_board, x, y) &&
+         (rowIsValid(*this, x, y) || columnIsValid(*this, x, y));
 }
 
 void GameState::makeMove(int x, int y) {}
