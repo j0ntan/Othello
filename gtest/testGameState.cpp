@@ -1,5 +1,6 @@
 #include "core/Board.hpp"
 #include "core/GameState.hpp"
+#include "othellogame/OthelloException.hpp"
 #include <cstdlib>
 #include <ctime>
 #include <gtest/gtest.h>
@@ -171,4 +172,16 @@ TEST(testGameState, firstTwoMovesPlacesOppositeTiles) {
   EXPECT_EQ(OthelloCell::black, gameState.board().cellAt(3, 2));
   gameState.makeMove(4, 2);
   EXPECT_EQ(OthelloCell::white, gameState.board().cellAt(4, 2));
+}
+
+TEST(testGameState, invalidMoveThrowsException) {
+  Board board;
+  board.placeTile(3, 3, OthelloCell::white);
+  board.placeTile(4, 3, OthelloCell::black);
+  board.placeTile(3, 4, OthelloCell::black);
+  board.placeTile(4, 4, OthelloCell::white);
+  GameState gameState(board);
+
+  EXPECT_THROW(gameState.makeMove(0, 0), OthelloException);
+  EXPECT_THROW(gameState.makeMove(3, 3), OthelloException);
 }

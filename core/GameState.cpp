@@ -1,4 +1,6 @@
 #include "GameState.hpp"
+#include "othellogame/OthelloException.hpp"
+#include <string>
 
 namespace {
 const int countTiles(const OthelloBoard &board, OthelloCell tile) noexcept {
@@ -151,6 +153,11 @@ bool GameState::isValidMove(int x, int y) const {
 }
 
 void GameState::makeMove(int x, int y) {
+  if (!isValidMove(x, y))
+    throw OthelloException(std::string(isBlackTurn() ? "Black" : "White") +
+                           "'s move at (" + std::to_string(x) + ", " +
+                           std::to_string(y) + ") is invalid.");
+
   if (isBlackTurn())
     reference_board.placeTile(x, y, OthelloCell::black);
   else
