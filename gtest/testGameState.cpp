@@ -253,3 +253,24 @@ TEST(testGameState, validNegativeDiagonalMoveFlipsInBetweenTiles) {
   EXPECT_EQ(gameState.board().cellAt(3, 3), OthelloCell::black);
   EXPECT_EQ(gameState.board().cellAt(1, 1), OthelloCell::white);
 }
+
+TEST(testGameState, comboVerticalAndHorizontalMoveFlipsAllInBetweenTiles) {
+  Board board;
+  board.placeTile(1, 4, OthelloCell::black);
+  board.placeTile(2, 4, OthelloCell::white);
+  board.placeTile(3, 4, OthelloCell::white);
+  board.placeTile(4, 1, OthelloCell::black);
+  board.placeTile(4, 2, OthelloCell::white);
+  board.placeTile(4, 3, OthelloCell::white);
+  GameState gameState(board);
+
+  EXPECT_EQ(gameState.board().cellAt(2, 4), OthelloCell::white);
+  EXPECT_EQ(gameState.board().cellAt(3, 4), OthelloCell::white);
+  EXPECT_EQ(gameState.board().cellAt(4, 2), OthelloCell::white);
+  EXPECT_EQ(gameState.board().cellAt(4, 3), OthelloCell::white);
+  gameState.makeMove(4, 4);
+  EXPECT_EQ(gameState.board().cellAt(2, 4), OthelloCell::black);
+  EXPECT_EQ(gameState.board().cellAt(3, 4), OthelloCell::black);
+  EXPECT_EQ(gameState.board().cellAt(4, 2), OthelloCell::black);
+  EXPECT_EQ(gameState.board().cellAt(4, 3), OthelloCell::black);
+}
