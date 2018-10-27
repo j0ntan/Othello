@@ -219,3 +219,20 @@ TEST(testGameState, validVerticalMoveFlipsInBetweenTiles) {
   EXPECT_EQ(gameState.board().cellAt(3, 5), OthelloCell::black);
   EXPECT_EQ(gameState.board().cellAt(3, 7), OthelloCell::white);
 }
+
+TEST(testGameState, validPositiveDiagonalMoveFlipsInBetweenTiles) {
+  Board board;
+  board.placeTile(2, 5, OthelloCell::black);
+  board.placeTile(3, 4, OthelloCell::white);
+  board.placeTile(4, 3, OthelloCell::white);
+  board.placeTile(6, 1, OthelloCell::white);
+  GameState gameState(board);
+
+  EXPECT_EQ(gameState.board().cellAt(3, 4), OthelloCell::white);
+  EXPECT_EQ(gameState.board().cellAt(4, 3), OthelloCell::white);
+  EXPECT_EQ(gameState.board().cellAt(6, 1), OthelloCell::white);
+  gameState.makeMove(5, 2);
+  EXPECT_EQ(gameState.board().cellAt(3, 4), OthelloCell::black);
+  EXPECT_EQ(gameState.board().cellAt(4, 3), OthelloCell::black);
+  EXPECT_EQ(gameState.board().cellAt(6, 1), OthelloCell::white);
+}
