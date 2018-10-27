@@ -309,3 +309,40 @@ TEST(testGameState, lastEmptyCellEndsGameForOneSideOnly) {
   EXPECT_FALSE(gameState1.isGameOver());
   EXPECT_TRUE(gameState2.isGameOver());
 }
+
+TEST(testGameState, gameOverForNonFilledBoard) {
+  // Vlasakova vs Schotte @ European Grand Prix Prague 2011
+  Board board1;
+  for (int x = 0; x < 8; ++x)
+    for (int y = 0; y < 8; ++y)
+      board1.placeTile(x, y, OthelloCell::white);
+  board1.flipTile(7, 5);
+  board1.setCellAt(7, 3, OthelloCell::empty);
+  board1.setCellAt(6, 4, OthelloCell::empty);
+  board1.setCellAt(7, 4, OthelloCell::empty);
+  board1.setCellAt(6, 5, OthelloCell::empty);
+  board1.setCellAt(7, 6, OthelloCell::empty);
+  GameState gameState1(board1);
+  GameState gameState2(board1, false);
+  EXPECT_TRUE(gameState1.isGameOver());
+  EXPECT_TRUE(gameState2.isGameOver());
+
+  // Vecci vs Nicolas @ World Othello Championship 2017, Ghent
+  Board board2;
+  for (int x = 0; x < 8; ++x)
+    for (int y = 0; y < 8; ++y)
+      if (x == 0 || y == 7)
+        board2.placeTile(x, y, OthelloCell::black);
+      else
+        board2.placeTile(x, y, OthelloCell::white);
+  board2.setCellAt(0, 0, OthelloCell::empty);
+  board2.setCellAt(0, 1, OthelloCell::empty);
+  board2.setCellAt(6, 1, OthelloCell::empty);
+  board2.setCellAt(0, 7, OthelloCell::empty);
+  board2.setCellAt(6, 7, OthelloCell::empty);
+  board2.setCellAt(7, 7, OthelloCell::empty);
+  GameState gameState3(board2);
+  GameState gameState4(board2, false);
+  EXPECT_TRUE(gameState3.isGameOver());
+  EXPECT_TRUE(gameState4.isGameOver());
+}
