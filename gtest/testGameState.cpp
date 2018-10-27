@@ -346,3 +346,19 @@ TEST(testGameState, gameOverForNonFilledBoard) {
   EXPECT_TRUE(gameState3.isGameOver());
   EXPECT_TRUE(gameState4.isGameOver());
 }
+
+TEST(testGameState, cloneIsIndependantFromOriginal) {
+  Board board;
+  board.placeTile(3, 3, OthelloCell::white);
+  board.placeTile(4, 3, OthelloCell::black);
+  board.placeTile(3, 4, OthelloCell::black);
+  board.placeTile(4, 4, OthelloCell::white);
+  GameState gameState(board);
+
+  auto clone = gameState.clone();
+  EXPECT_EQ(gameState.isBlackTurn(), clone->isBlackTurn());
+  EXPECT_EQ(gameState.board().cellAt(3, 2), clone->board().cellAt(3, 2));
+  clone->makeMove(3, 2);
+  EXPECT_NE(gameState.isBlackTurn(), clone->isBlackTurn());
+  EXPECT_NE(gameState.board().cellAt(3, 2), clone->board().cellAt(3, 2));
+}

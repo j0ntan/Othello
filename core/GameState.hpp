@@ -10,6 +10,8 @@ class GameState : public OthelloGameState {
 public:
   GameState(const Board &board, bool blackMovesFirst = true);
 
+  GameState(const GameState &gameState);
+
   ~GameState() final = default;
 
   // board() returns a reference to a constant OthelloBoard describing

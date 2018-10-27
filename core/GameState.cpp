@@ -237,6 +237,10 @@ void flipNegativeDiagonalTiles(GameState &gameState, Board &board, const int x,
 GameState::GameState(const Board &board, bool blackMovesFirst)
     : reference_board(board), blacksTurn(blackMovesFirst) {}
 
+GameState::GameState(const GameState &gameState)
+    : reference_board(gameState.reference_board),
+      blacksTurn(gameState.blacksTurn) {}
+
 const OthelloBoard &GameState::board() const noexcept {
   return reference_board;
 }
@@ -293,4 +297,6 @@ void GameState::makeMove(int x, int y) {
   blacksTurn = !blacksTurn;
 }
 
-std::unique_ptr<OthelloGameState> GameState::clone() const {}
+std::unique_ptr<OthelloGameState> GameState::clone() const {
+  return std::unique_ptr<OthelloGameState>(new GameState(*this));
+}
