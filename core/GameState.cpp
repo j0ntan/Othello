@@ -198,6 +198,36 @@ void flipPositiveDiagonalTiles(GameState &gameState, Board &board, const int x,
     while (--x_n != x && ++y_n != y)
       board.flipTile(x_n, y_n);
 }
+
+void flipNegativeDiagonalTiles(GameState &gameState, Board &board, const int x,
+                               const int y) {
+  int x_n = x;
+  int y_n = y;
+  const OthelloCell opposing =
+      gameState.isBlackTurn() ? OthelloCell::white : OthelloCell::black;
+
+  // find top-left anchor
+  while (--x_n >= 0 && --y_n >= 0 &&
+         gameState.board().cellAt(x_n, y_n) == opposing)
+    ;
+  if (x_n >= 0 && y_n >= 0 &&
+      gameState.board().cellAt(x_n, y_n) != OthelloCell::empty)
+    while (++x_n != x && ++y_n != y)
+      board.flipTile(x_n, y_n);
+
+  // find bottom-right anchor
+  x_n = x;
+  y_n = y;
+  const int width = gameState.board().width();
+  const int height = gameState.board().height();
+  while (++x_n < width && ++y_n < height &&
+         gameState.board().cellAt(x_n, y_n) == opposing)
+    ;
+  if (x_n < width && y_n < height &&
+      gameState.board().cellAt(x_n, y_n) != OthelloCell::empty)
+    while (--x_n != x && --y_n != y)
+      board.flipTile(x_n, y_n);
+}
 } // namespace
 
 GameState::GameState(const Board &board, bool blackMovesFirst)
@@ -245,6 +275,8 @@ void GameState::makeMove(int x, int y) {
     flipColumnTiles(*this, reference_board, x, y);
   if (positiveDiagonalIsValid(*this, x, y))
     flipPositiveDiagonalTiles(*this, reference_board, x, y);
+  if (negativeDiagonalIsValid(*this, x, y))
+    flipNegativeDiagonalTiles(*this, reference_board, x, y);
 
   blacksTurn = !blacksTurn;
 }
