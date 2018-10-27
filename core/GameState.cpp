@@ -122,6 +122,29 @@ bool negativeDiagonalIsValid(const GameState &gameState, const int x,
 
   return false; // else, invalid
 }
+
+void flipRowTiles(GameState &gameState, Board &board, const int x,
+                  const int y) {
+  int x_n = x;
+  const OthelloCell opposing =
+      gameState.isBlackTurn() ? OthelloCell::white : OthelloCell::black;
+
+  // find left anchor
+  while (--x_n >= 0 && gameState.board().cellAt(x_n, y) == opposing)
+    ;
+  if (x_n >= 0 && gameState.board().cellAt(x_n, y) != OthelloCell::empty)
+    while (++x_n != x)
+      board.flipTile(x_n, y);
+
+  // find right anchor
+  x_n = x;
+  const int width = gameState.board().width();
+  while (++x_n < width && gameState.board().cellAt(x_n, y) == opposing)
+    ;
+  if (x_n < width && gameState.board().cellAt(x_n, y) != OthelloCell::empty)
+    while (--x_n != x)
+      board.flipTile(x_n, y);
+}
 } // namespace
 
 GameState::GameState(const Board &board, bool blackMovesFirst)
@@ -162,6 +185,10 @@ void GameState::makeMove(int x, int y) {
     reference_board.placeTile(x, y, OthelloCell::black);
   else
     reference_board.placeTile(x, y, OthelloCell::white);
+
+  if (rowIsValid(*this, x, y))
+    flipRowTiles(*this, reference_board, x, y);
+
   blacksTurn = !blacksTurn;
 }
 

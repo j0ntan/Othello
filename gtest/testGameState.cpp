@@ -185,3 +185,20 @@ TEST(testGameState, invalidMoveThrowsException) {
   EXPECT_THROW(gameState.makeMove(0, 0), OthelloException);
   EXPECT_THROW(gameState.makeMove(3, 3), OthelloException);
 }
+
+TEST(testGameState, validHorizontalMoveFlipsInBetweenTiles) {
+  Board board;
+  board.placeTile(3, 3, OthelloCell::black);
+  board.placeTile(4, 3, OthelloCell::white);
+  board.placeTile(5, 3, OthelloCell::white);
+  board.placeTile(7, 3, OthelloCell::white);
+  GameState gameState(board);
+
+  EXPECT_EQ(gameState.board().cellAt(4, 3), OthelloCell::white);
+  EXPECT_EQ(gameState.board().cellAt(5, 3), OthelloCell::white);
+  EXPECT_EQ(gameState.board().cellAt(7, 3), OthelloCell::white);
+  gameState.makeMove(6, 3);
+  EXPECT_EQ(gameState.board().cellAt(4, 3), OthelloCell::black);
+  EXPECT_EQ(gameState.board().cellAt(5, 3), OthelloCell::black);
+  EXPECT_EQ(gameState.board().cellAt(7, 3), OthelloCell::white);
+}
