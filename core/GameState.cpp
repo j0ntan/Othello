@@ -245,7 +245,15 @@ int GameState::whiteScore() const noexcept {
   return countTiles(board(), OthelloCell::white);
 }
 
-bool GameState::isGameOver() const noexcept { return false; }
+bool GameState::isGameOver() const noexcept {
+  bool move_available = false;
+  const int width = reference_board.width();
+  const int height = reference_board.height();
+  for (int x = 0; x < width && !move_available; ++x)
+    for (int y = 0; y < height && !move_available; ++y)
+      move_available = reference_board.cellAt(x, y) == OthelloCell ::empty;
+  return !move_available;
+}
 
 bool GameState::isBlackTurn() const noexcept { return blacksTurn; }
 

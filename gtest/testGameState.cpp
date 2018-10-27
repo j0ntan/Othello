@@ -285,3 +285,13 @@ TEST(testGameState, gameNotOverForStartingBoard) {
 
   EXPECT_FALSE(gameState.isGameOver());
 }
+
+TEST(testGameState, gameOverForFullBoard) {
+  Board board;
+  for (int x = 0; x < 8; ++x)
+    for (int y = 0; y < 8; ++y)
+      board.placeTile(x, y, OthelloCell::white);
+  GameState gameState(board);
+
+  EXPECT_TRUE(gameState.isGameOver());
+}
