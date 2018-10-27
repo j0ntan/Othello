@@ -295,3 +295,17 @@ TEST(testGameState, gameOverForFullBoard) {
 
   EXPECT_TRUE(gameState.isGameOver());
 }
+
+TEST(testGameState, lastEmptyCellEndsGameForOneSideOnly) {
+  Board board;
+  for (int x = 0; x < 8; ++x)
+    for (int y = 0; y < 8; ++y)
+      board.placeTile(x, y, OthelloCell::white);
+  board.flipTile(0, 0);
+  board.setCellAt(7, 0, OthelloCell::empty);
+  GameState gameState1(board);        // set black's turn to move
+  GameState gameState2(board, false); // set white's turn
+
+  EXPECT_FALSE(gameState1.isGameOver());
+  EXPECT_TRUE(gameState2.isGameOver());
+}

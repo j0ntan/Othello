@@ -24,7 +24,7 @@ bool rowIsValid(const GameState &gameState, const int x, const int y) {
   // check left side
   while (--x_n >= 0 && gameState.board().cellAt(x_n, y) == opposing)
     ;
-  if (gameState.board().cellAt(x_n, y) != OthelloCell::empty &&
+  if (x_n >= 0 && gameState.board().cellAt(x_n, y) != OthelloCell::empty &&
       gameState.board().cellAt(x_n + 1, y) == opposing) // found anchor
     return true;
 
@@ -33,7 +33,7 @@ bool rowIsValid(const GameState &gameState, const int x, const int y) {
   const int width = gameState.board().width();
   while (++x_n < width && gameState.board().cellAt(x_n, y) == opposing)
     ;
-  if (gameState.board().cellAt(x_n, y) != OthelloCell::empty &&
+  if (x_n < width && gameState.board().cellAt(x_n, y) != OthelloCell::empty &&
       gameState.board().cellAt(x_n - 1, y) == opposing) // found anchor
     return true;
 
@@ -48,7 +48,7 @@ bool columnIsValid(const GameState &gameState, const int x, const int y) {
   // check top side
   while (--y_n >= 0 && gameState.board().cellAt(x, y_n) == opposing)
     ;
-  if (gameState.board().cellAt(x, y_n) != OthelloCell::empty &&
+  if (y_n >= 0 && gameState.board().cellAt(x, y_n) != OthelloCell::empty &&
       gameState.board().cellAt(x, y_n + 1) == opposing) // found anchor
     return true;
 
@@ -57,7 +57,7 @@ bool columnIsValid(const GameState &gameState, const int x, const int y) {
   const int height = gameState.board().height();
   while (++y_n < height && gameState.board().cellAt(x, y_n) == opposing)
     ;
-  if (gameState.board().cellAt(x, y_n) != OthelloCell::empty &&
+  if (y_n < height && gameState.board().cellAt(x, y_n) != OthelloCell::empty &&
       gameState.board().cellAt(x, y_n - 1) == opposing) // found anchor
     return true;
 
@@ -76,7 +76,8 @@ bool positiveDiagonalIsValid(const GameState &gameState, const int x,
   while (++x_n < width && --y_n >= 0 &&
          gameState.board().cellAt(x_n, y_n) == opposing)
     ;
-  if (gameState.board().cellAt(x_n, y_n) != OthelloCell::empty &&
+  if (x_n < width && y_n >= 0 &&
+      gameState.board().cellAt(x_n, y_n) != OthelloCell::empty &&
       gameState.board().cellAt(x_n - 1, y_n + 1) == opposing) // found anchor
     return true;
 
@@ -87,7 +88,8 @@ bool positiveDiagonalIsValid(const GameState &gameState, const int x,
   while (--x_n >= 0 && ++y_n < height &&
          gameState.board().cellAt(x_n, y_n) == opposing)
     ;
-  if (gameState.board().cellAt(x_n, y_n) != OthelloCell::empty &&
+  if (x_n >= 0 && y_n < height &&
+      gameState.board().cellAt(x_n, y_n) != OthelloCell::empty &&
       gameState.board().cellAt(x_n + 1, y_n - 1) == opposing) // found anchor
     return true;
 
@@ -104,7 +106,8 @@ bool negativeDiagonalIsValid(const GameState &gameState, const int x,
   while (--x_n >= 0 && --y_n >= 0 &&
          gameState.board().cellAt(x_n, y_n) == opposing)
     ;
-  if (gameState.board().cellAt(x_n, y_n) != OthelloCell::empty &&
+  if (x_n >= 0 && y_n >= 0 &&
+      gameState.board().cellAt(x_n, y_n) != OthelloCell::empty &&
       gameState.board().cellAt(x_n + 1, y_n + 1) == opposing) // found anchor
     return true;
 
@@ -116,7 +119,8 @@ bool negativeDiagonalIsValid(const GameState &gameState, const int x,
   while (++x_n < width && ++y_n < height &&
          gameState.board().cellAt(x_n, y_n) == opposing)
     ;
-  if (gameState.board().cellAt(x_n, y_n) != OthelloCell::empty &&
+  if (x_n < width && y_n < height &&
+      gameState.board().cellAt(x_n, y_n) != OthelloCell::empty &&
       gameState.board().cellAt(x_n - 1, y_n - 1) == opposing) // found anchor
     return true;
 
@@ -251,7 +255,7 @@ bool GameState::isGameOver() const noexcept {
   const int height = reference_board.height();
   for (int x = 0; x < width && !move_available; ++x)
     for (int y = 0; y < height && !move_available; ++y)
-      move_available = reference_board.cellAt(x, y) == OthelloCell ::empty;
+      move_available = isValidMove(x, y);
   return !move_available;
 }
 
