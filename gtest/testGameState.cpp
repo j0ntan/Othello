@@ -274,3 +274,14 @@ TEST(testGameState, comboVerticalAndHorizontalMoveFlipsAllInBetweenTiles) {
   EXPECT_EQ(gameState.board().cellAt(4, 2), OthelloCell::black);
   EXPECT_EQ(gameState.board().cellAt(4, 3), OthelloCell::black);
 }
+
+TEST(testGameState, gameNotOverForStartingBoard) {
+  Board board;
+  board.placeTile(3, 3, OthelloCell::white);
+  board.placeTile(4, 3, OthelloCell::black);
+  board.placeTile(3, 4, OthelloCell::black);
+  board.placeTile(4, 4, OthelloCell::white);
+  GameState gameState(board);
+
+  EXPECT_FALSE(gameState.isGameOver());
+}
