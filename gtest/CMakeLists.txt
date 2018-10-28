@@ -20,6 +20,17 @@ target_link_libraries(testGameState
         PUBLIC testgtestmain
         PUBLIC gtest)
 
+add_executable(testSimpleAI testSimpleAI.cpp)
+target_include_directories(testSimpleAI
+        PUBLIC ${CMAKE_SOURCE_DIR}
+        PUBLIC ${gtest_SOURCE_DIR}/include)
+target_link_libraries(testSimpleAI
+        PUBLIC libSimpleAI
+        PUBLIC libGameState
+        PUBLIC libBoard
+        PUBLIC testgtestmain
+        PUBLIC gtest)
+
 add_executable(testRunAll gtestmain.cpp testBoard.cpp testGameState.cpp)
 target_include_directories(testRunAll
         PUBLIC ${CMAKE_SOURCE_DIR}
