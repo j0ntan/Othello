@@ -8,7 +8,9 @@
 namespace AI {
 namespace simple {
 int evaluate(const OthelloGameState *gameState,
-             const OthelloCell &choosersTiles) {}
+             const OthelloCell &choosersTiles) {
+  return 0;
+}
 } // namespace simple
 } // namespace AI
 
