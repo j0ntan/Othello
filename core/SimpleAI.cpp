@@ -6,7 +6,7 @@
 
 namespace {
 int search(OthelloGameState *s, int depth, bool myTurn,
-           const OthelloCell &choosersTiles) {
+           const OthelloCell &choosersTiles, int alpha, int beta) {
   if (depth == 0)
     return AI::simple::evaluate(s, choosersTiles);
   else {
@@ -17,8 +17,12 @@ int search(OthelloGameState *s, int depth, bool myTurn,
           if (s->isValidMove(x, y)) {
             std::unique_ptr<OthelloGameState> clone = s->clone();
             clone->makeMove(x, y);
-            int score = search(clone.get(), depth - 1, !myTurn, choosersTiles);
+            int score = search(clone.get(), depth - 1, !myTurn, choosersTiles,
+                               alpha, beta);
             max_score = std::max(score, max_score);
+            alpha = std::max(alpha, max_score);
+            if (beta <= alpha)
+              return max_score;
           }
       if (max_score == -64)
         return AI::simple::evaluate(s, choosersTiles);
@@ -30,8 +34,12 @@ int search(OthelloGameState *s, int depth, bool myTurn,
         for (int y = 0; y < s->board().height(); ++y)
           if (s->isValidMove(x, y)) {
             s->makeMove(x, y);
-            int score = search(s, depth - 1, !myTurn, choosersTiles);
+            int score =
+                search(s, depth - 1, !myTurn, choosersTiles, alpha, beta);
             min_score = std::min(score, min_score);
+            beta = std::min(beta, min_score);
+            if (beta <= alpha)
+              return min_score;
           }
       if (min_score == 64)
         return AI::simple::evaluate(s, choosersTiles);
@@ -56,8 +64,8 @@ std::pair<int, int> SimpleAI::chooseMove(const OthelloGameState &state) {
       if (state.isValidMove(x, y)) {
         std::unique_ptr<OthelloGameState> newState = state.clone();
         newState->makeMove(x, y);
-        int score =
-            search(newState.get(), depth - 1, false, currentPlayerTiles);
+        int score = search(newState.get(), depth - 1, false, currentPlayerTiles,
+                           -64, 64);
         if (score > best_score || (score == best_score && std::rand() % 2)) {
           best_score = score;
           best_move_x = x;
