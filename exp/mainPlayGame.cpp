@@ -9,6 +9,7 @@ void announceWinner(const GameState &gameState);
 bool playerHasValidMove(const GameState &gameState, OthelloCell whichPlayer);
 void humanMakesMove(GameState &gameState);
 void skipTurn(GameState &gameState, OthelloCell whichPlayer);
+void computerMakesMove(GameState &gameState);
 
 int main() {
   Board board = startingPositionBoard();
@@ -23,7 +24,7 @@ int main() {
 
     // computer moves
     if (playerHasValidMove(gameState, OthelloCell::white))
-      ; // AI chooses move
+      computerMakesMove(gameState);
     else
       skipTurn(gameState, OthelloCell::white);
   }
@@ -74,4 +75,10 @@ void humanMakesMove(GameState &gameState) {
 void skipTurn(GameState &gameState, OthelloCell whichPlayer) {
   gameState =
       GameState(gameState.boardCopy(), whichPlayer != OthelloCell::black);
+}
+
+void computerMakesMove(GameState &gameState) {
+  SimpleAI simpleAI;
+  auto chosen_move = simpleAI.chooseMove(gameState);
+  gameState.makeMove(chosen_move.first, chosen_move.second);
 }
