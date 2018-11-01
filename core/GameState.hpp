@@ -18,6 +18,8 @@ public:
   // what's on the board in this game state.
   const OthelloBoard &board() const noexcept final;
 
+  Board boardCopy() const noexcept;
+
   // blackScore() returns the black player's current score.
   int blackScore() const noexcept final;
 
