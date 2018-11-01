@@ -4,7 +4,12 @@
 #include <ctime>
 
 namespace {
-int eval(const OthelloGameState *s, const OthelloCell &choosersTiles) {}
+int eval(const OthelloGameState *s, const OthelloCell &choosersTiles) {
+  if (choosersTiles == OthelloCell::black)
+    return s->blackScore() - s->whiteScore();
+  else
+    return s->whiteScore() - s->blackScore();
+}
 
 int search(OthelloGameState *s, int depth, bool myTurn,
            const OthelloCell &choosersTiles) {
