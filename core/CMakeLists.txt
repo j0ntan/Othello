@@ -7,4 +7,6 @@ target_include_directories(libGameState
         PUBLIC ${CMAKE_SOURCE_DIR})
 
 add_library(libSimpleAI STATIC SimpleAI.hpp SimpleAI.cpp)
-target_include_directories(libSimpleAI PUBLIC ${OTHELLO_INCLUDE})
+target_include_directories(libSimpleAI
+        PUBLIC ${OTHELLO_INCLUDE}
+        PUBLIC ${CMAKE_SOURCE_DIR})
