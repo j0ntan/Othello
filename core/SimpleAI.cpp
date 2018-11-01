@@ -44,7 +44,7 @@ int search(OthelloGameState *s, int depth, bool myTurn,
 
 std::pair<int, int> SimpleAI::chooseMove(const OthelloGameState &state) {
   std::srand(std::time(nullptr));
-  const int depth = 8;
+  const int depth = 6;
   const int width = state.board().width();
   const int height = state.board().height();
   const OthelloCell currentPlayerTiles =
