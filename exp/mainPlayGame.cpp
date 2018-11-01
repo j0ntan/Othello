@@ -13,6 +13,7 @@ void computerMakesMove(GameState &gameState);
 
 int main() {
   Board board = startingPositionBoard();
+  board.print();
 
   GameState gameState(board);
   while (!gameState.isGameOver()) {
@@ -69,10 +70,16 @@ void humanMakesMove(GameState &gameState) {
     std::cout << "Choice is invalid. Please try again.\n";
     std::cin >> x >> y;
   }
+
+  std::cout << "Placing black tile @ (" << x << ", " << y << ")\n";
   gameState.makeMove(x, y);
+  gameState.boardCopy().print();
+  std::cout << std::endl;
 }
 
 void skipTurn(GameState &gameState, OthelloCell whichPlayer) {
+  std::cout << (whichPlayer == OthelloCell::black ? "black" : "white")
+            << " skips this turn\n\n";
   gameState =
       GameState(gameState.boardCopy(), whichPlayer != OthelloCell::black);
 }
@@ -80,5 +87,10 @@ void skipTurn(GameState &gameState, OthelloCell whichPlayer) {
 void computerMakesMove(GameState &gameState) {
   SimpleAI simpleAI;
   auto chosen_move = simpleAI.chooseMove(gameState);
+
+  std::cout << "Placing white tile @ (" << chosen_move.first << ", "
+            << chosen_move.second << ")\n";
   gameState.makeMove(chosen_move.first, chosen_move.second);
+  gameState.boardCopy().print();
+  std::cout << std::endl;
 }
