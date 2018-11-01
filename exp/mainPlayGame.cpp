@@ -8,6 +8,7 @@ Board startingPositionBoard();
 void announceWinner(const GameState &gameState);
 bool playerHasValidMove(const GameState &gameState, OthelloCell whichPlayer);
 void humanMakesMove(GameState &gameState);
+void skipTurn(GameState &gameState, OthelloCell whichPlayer);
 
 int main() {
   Board board = startingPositionBoard();
@@ -18,13 +19,13 @@ int main() {
     if (playerHasValidMove(gameState, OthelloCell::black))
       humanMakesMove(gameState);
     else
-      ; // skip turn
+      skipTurn(gameState, OthelloCell::black);
 
     // computer moves
     if (playerHasValidMove(gameState, OthelloCell::white))
       ; // AI chooses move
     else
-      ; // skip turn
+      skipTurn(gameState, OthelloCell::white);
   }
 
   announceWinner(gameState);
@@ -68,4 +69,9 @@ void humanMakesMove(GameState &gameState) {
     std::cin >> x >> y;
   }
   gameState.makeMove(x, y);
+}
+
+void skipTurn(GameState &gameState, OthelloCell whichPlayer) {
+  gameState =
+      GameState(gameState.boardCopy(), whichPlayer != OthelloCell::black);
 }
