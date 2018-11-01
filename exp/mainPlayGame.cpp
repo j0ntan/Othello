@@ -7,6 +7,7 @@
 Board startingPositionBoard();
 void announceWinner(const GameState &gameState);
 bool playerHasValidMove(const GameState &gameState, OthelloCell whichPlayer);
+void humanMakesMove(GameState &gameState);
 
 int main() {
   Board board = startingPositionBoard();
@@ -15,7 +16,7 @@ int main() {
   while (!gameState.isGameOver()) {
     // human moves
     if (playerHasValidMove(gameState, OthelloCell::black))
-      ; // prompt to make move
+      humanMakesMove(gameState);
     else
       ; // skip turn
 
@@ -56,4 +57,15 @@ bool playerHasValidMove(const GameState &gameState, OthelloCell whichPlayer) {
     for (int y = 0; y < 8 && !hasValidMove; ++y)
       hasValidMove = current_game_state.isValidMove(x, y);
   return hasValidMove;
+}
+
+void humanMakesMove(GameState &gameState) {
+  int x = 0, y = 0;
+  std::cout << "Enter an x- and y-coordinate for your move:\n";
+  std::cin >> x >> y;
+  while (!gameState.isValidMove(x, y)) {
+    std::cout << "Choice is invalid. Please try again.\n";
+    std::cin >> x >> y;
+  }
+  gameState.makeMove(x, y);
 }
