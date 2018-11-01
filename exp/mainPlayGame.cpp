@@ -5,7 +5,15 @@
 // function prototypes
 Board startingPositionBoard();
 
-int main() { Board board = startingPositionBoard(); }
+int main() {
+  Board board = startingPositionBoard();
+
+  GameState gameState(board);
+  while (!gameState.isGameOver()) {
+    // human moves
+    // computer moves
+  }
+}
 
 Board startingPositionBoard() {
   Board board;
