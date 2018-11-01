@@ -10,6 +10,7 @@ bool playerHasValidMove(const GameState &gameState, OthelloCell whichPlayer);
 void humanMakesMove(GameState &gameState);
 void skipTurn(GameState &gameState, OthelloCell whichPlayer);
 void computerMakesMove(GameState &gameState);
+void printScores(const GameState &gameState);
 
 int main() {
   Board board = startingPositionBoard();
@@ -31,6 +32,7 @@ int main() {
   }
 
   announceWinner(gameState);
+  printScores(gameState);
 }
 
 Board startingPositionBoard() {
@@ -73,6 +75,7 @@ void humanMakesMove(GameState &gameState) {
 
   std::cout << "Placing black tile @ (" << x << ", " << y << ")\n";
   gameState.makeMove(x, y);
+  printScores(gameState);
   gameState.boardCopy().print();
   std::cout << std::endl;
 }
@@ -91,6 +94,12 @@ void computerMakesMove(GameState &gameState) {
   std::cout << "Placing white tile @ (" << chosen_move.first << ", "
             << chosen_move.second << ")\n";
   gameState.makeMove(chosen_move.first, chosen_move.second);
+  printScores(gameState);
   gameState.boardCopy().print();
   std::cout << std::endl;
+}
+
+void printScores(const GameState &gameState) {
+  std::cout << "Score: (" << gameState.blackScore() << " - "
+            << gameState.whiteScore() << ")\n";
 }
