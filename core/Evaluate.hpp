@@ -9,7 +9,12 @@ namespace AI {
 namespace simple {
 int evaluate(const OthelloGameState *gameState,
              const OthelloCell &choosersTiles) {
-  return 0;
+  int score = 0;
+  if (choosersTiles == OthelloCell::black)
+    score = gameState->blackScore() - gameState->whiteScore();
+  else
+    score = gameState->whiteScore() - gameState->blackScore();
+  return score;
 }
 } // namespace simple
 } // namespace AI
