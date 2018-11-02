@@ -1,12 +1,18 @@
 #include "SimpleAI.hpp"
 #include "core/Evaluate.hpp"
 #include "core/GameState.hpp"
+#include <algorithm>
 #include <cstdlib>
 #include <ctime>
 #include <utility>
 #include <vector>
 
 namespace {
+bool compareMoves(const std::pair<int, int> &m1,
+                  const std::pair<int, int> &m2) {
+  return AI::quickMoveEval(m1) < AI::quickMoveEval(m2);
+}
+
 std::vector<std::pair<int, int>>
 findAvailableMoves(const OthelloGameState &state) {
   std::vector<std::pair<int, int>> moves;
@@ -74,6 +80,9 @@ std::pair<int, int> SimpleAI::chooseMove(const OthelloGameState &state) {
 
   int best_move_x = 0, best_move_y = 0, best_score = -100;
   auto available_moves = findAvailableMoves(state);
+  std::sort(std::begin(available_moves), std::end(available_moves),
+            compareMoves);
+  std::reverse(std::begin(available_moves), std::end(available_moves));
   for (const auto &move : available_moves) {
     const auto &x = move.first;
     const auto &y = move.second;
