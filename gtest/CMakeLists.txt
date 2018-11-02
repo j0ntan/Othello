@@ -30,7 +30,8 @@ target_link_libraries(testSimpleEvaluate
         PUBLIC testgtestmain
         PUBLIC gtest)
 
-add_executable(testRunAll gtestmain.cpp testBoard.cpp testGameState.cpp)
+add_executable(testRunAll gtestmain.cpp testBoard.cpp testGameState.cpp
+        testSimpleEvaluate.cpp)
 target_include_directories(testRunAll
         PUBLIC ${CMAKE_SOURCE_DIR}
         PUBLIC ${gtest_SOURCE_DIR}/include)
