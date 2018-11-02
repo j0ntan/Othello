@@ -3,8 +3,22 @@
 #include "core/GameState.hpp"
 #include <cstdlib>
 #include <ctime>
+#include <utility>
+#include <vector>
 
 namespace {
+std::vector<std::pair<int, int>>
+findAvailableMoves(const OthelloGameState &state) {
+  std::vector<std::pair<int, int>> moves;
+  const auto width = state.board().width();
+  const auto height = state.board().height();
+  for (int x = 0; x < width; ++x)
+    for (int y = 0; y < height; ++y)
+      if (state.isValidMove(x, y))
+        moves.emplace_back(std::make_pair(x, y));
+  return moves;
+}
+
 int search(OthelloGameState *s, int depth, bool myTurn,
            const OthelloCell &choosersTiles, int alpha, int beta) {
   if (depth == 0)
@@ -59,19 +73,20 @@ std::pair<int, int> SimpleAI::chooseMove(const OthelloGameState &state) {
       state.isWhiteTurn() ? OthelloCell::white : OthelloCell::black;
 
   int best_move_x = 0, best_move_y = 0, best_score = -100;
-  for (int x = 0; x < width; ++x)
-    for (int y = 0; y < height; ++y)
-      if (state.isValidMove(x, y)) {
-        std::unique_ptr<OthelloGameState> newState = state.clone();
-        newState->makeMove(x, y);
-        int score = search(newState.get(), depth - 1, false, currentPlayerTiles,
-                           -64, 64);
-        if (score > best_score || (score == best_score && std::rand() % 2)) {
-          best_score = score;
-          best_move_x = x;
-          best_move_y = y;
-        }
-      }
+  auto available_moves = findAvailableMoves(state);
+  for (const auto &move : available_moves) {
+    const auto &x = move.first;
+    const auto &y = move.second;
+    std::unique_ptr<OthelloGameState> newState = state.clone();
+    newState->makeMove(x, y);
+    int score =
+        search(newState.get(), depth - 1, false, currentPlayerTiles, -64, 64);
+    if (score > best_score || (score == best_score && std::rand() % 2)) {
+      best_score = score;
+      best_move_x = x;
+      best_move_y = y;
+    }
+  }
 
   return std::make_pair(best_move_x, best_move_y);
 }
