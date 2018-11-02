@@ -1,6 +1,7 @@
 #include "core/Board.hpp"
 #include "core/GameState.hpp"
 #include "core/SimpleAI.hpp"
+#include <cctype>
 #include <iostream>
 
 // function prototypes
@@ -65,12 +66,24 @@ bool playerHasValidMove(const GameState &gameState, OthelloCell whichPlayer) {
 }
 
 void humanMakesMove(GameState &gameState) {
+  char first_input = '\0';
   int x = 0, y = 0;
   std::cout << "Enter an x- and y-coordinate for your move:\n";
-  std::cin >> x >> y;
-  while (!gameState.isValidMove(x, y)) {
-    std::cout << "Choice is invalid. Please try again.\n";
-    std::cin >> x >> y;
+  std::cout << "(Enter the letter \'C\' to let the AI choose)\n";
+  std::cin >> first_input;
+  if (first_input == 'c' || first_input == 'C') {
+    SimpleAI simpleAI;
+    auto move = simpleAI.chooseMove(gameState);
+    x = move.first;
+    y = move.second;
+
+  } else {
+    x = first_input - '0';
+    std::cin >> y;
+    while (!gameState.isValidMove(x, y)) {
+      std::cout << "Choice is invalid. Please try again.\n";
+      std::cin >> x >> y;
+    }
   }
 
   std::cout << "Placing black tile @ (" << x << ", " << y << ")\n";
