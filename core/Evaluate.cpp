@@ -10,4 +10,11 @@ int AI::simple::evaluate(const OthelloGameState *gameState,
   return score;
 }
 
-int AI::quickMoveEval(const std::pair<int, int> &move) { return 0; }
+int AI::quickMoveEval(const std::pair<int, int> &move) {
+  const int scores[8][8] = {
+      {4, -3, 2, 2, 2, 2, -3, 4},       {-3, -4, -1, -1, -1, -1, -4, -3},
+      {2, -1, 1, 0, 0, 1, -1, 2},       {2, -1, 0, 1, 1, 0, -1, 2},
+      {2, -1, 0, 1, 1, 0, -1, 2},       {2, -1, 1, 0, 0, 1, -1, 2},
+      {-3, -4, -1, -1, -1, -1, -4, -3}, {4, -3, 2, 2, 2, 2, -3, 4}};
+  return scores[move.second][move.first];
+}

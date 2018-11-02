@@ -35,3 +35,10 @@ TEST(testQuickMoveEval, scoresAreSymmetrical) {
       EXPECT_EQ(AI::quickMoveEval(std::make_pair(x, y)),
                 AI::quickMoveEval(std::make_pair(y, x)));
 }
+
+TEST(testQuickMoveEval, cellHasCorrectScore) {
+  EXPECT_EQ(AI::quickMoveEval(std::make_pair(0, 0)), 4);
+  EXPECT_EQ(AI::quickMoveEval(std::make_pair(1, 1)), -4);
+  EXPECT_EQ(AI::quickMoveEval(std::make_pair(4, 1)), -1);
+  EXPECT_EQ(AI::quickMoveEval(std::make_pair(3, 5)), 0);
+}
