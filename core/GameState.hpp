@@ -8,7 +8,7 @@ class OthelloBoard;
 
 class GameState : public OthelloGameState {
 public:
-  GameState(const Board &board, bool blackMovesFirst = true);
+  GameState(const Board &board, bool blackCurrentPlayer = true);
 
   GameState(const GameState &gameState);
 

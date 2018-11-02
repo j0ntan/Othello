@@ -234,8 +234,8 @@ void flipNegativeDiagonalTiles(GameState &gameState, Board &board, const int x,
 }
 } // namespace
 
-GameState::GameState(const Board &board, bool blackMovesFirst)
-    : reference_board(board), blacksTurn(blackMovesFirst) {}
+GameState::GameState(const Board &board, bool blackCurrentPlayer)
+    : reference_board(board), blacksTurn(blackCurrentPlayer) {}
 
 GameState::GameState(const GameState &gameState)
     : reference_board(gameState.reference_board),
