@@ -9,3 +9,5 @@ int AI::simple::evaluate(const OthelloGameState *gameState,
     score = gameState->whiteScore() - gameState->blackScore();
   return score;
 }
+
+int AI::quickMoveEval(const std::pair<int, int> &move) { return 0; }
