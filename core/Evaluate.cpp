@@ -20,4 +20,6 @@ int AI::quickMoveEval(const std::pair<int, int> &move) {
 }
 
 int AI::stronger::evaluate(const OthelloGameState *gameState,
-                           const OthelloCell &choosersTiles) {}
+                           const OthelloCell &choosersTiles) {
+  return 0;
+}
