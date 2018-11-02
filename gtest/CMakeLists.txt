@@ -20,12 +20,11 @@ target_link_libraries(testGameState
         PUBLIC testgtestmain
         PUBLIC gtest)
 
-add_executable(testSimpleAI testSimpleAI.cpp)
-target_include_directories(testSimpleAI
+add_executable(testSimpleEvaluate testSimpleEvaluate.cpp)
+target_include_directories(testSimpleEvaluate
         PUBLIC ${CMAKE_SOURCE_DIR}
         PUBLIC ${gtest_SOURCE_DIR}/include)
-target_link_libraries(testSimpleAI
-        PUBLIC libSimpleAI
+target_link_libraries(testSimpleEvaluate
         PUBLIC libGameState
         PUBLIC libBoard
         PUBLIC testgtestmain

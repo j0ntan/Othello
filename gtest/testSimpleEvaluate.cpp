@@ -1,10 +1,9 @@
 #include "core/Board.hpp"
 #include "core/Evaluate.hpp"
 #include "core/GameState.hpp"
-#include "core/SimpleAI.hpp"
 #include <gtest/gtest.h>
 
-TEST(testEvaluate, startingPositionScoresZero) {
+TEST(testSimpleEvaluate, startingPositionScoresZero) {
   Board board;
   board.setCellAt(3, 3, OthelloCell::white);
   board.setCellAt(4, 3, OthelloCell::black);
@@ -16,7 +15,7 @@ TEST(testEvaluate, startingPositionScoresZero) {
   EXPECT_EQ(0, AI::simple::evaluate(&gameState, OthelloCell::white));
 }
 
-TEST(testEvaluate, unequalPiecesScoresDifferently) {
+TEST(testSimpleEvaluate, unequalPiecesScoresDifferently) {
   Board board;
   board.setCellAt(3, 3, OthelloCell::white);
   board.setCellAt(4, 3, OthelloCell::black);
