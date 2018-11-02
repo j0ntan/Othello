@@ -14,3 +14,6 @@ target_include_directories(libSimpleAI
         PUBLIC ${OTHELLO_INCLUDE}
         PUBLIC ${CMAKE_SOURCE_DIR})
 target_link_libraries(libSimpleAI PUBLIC libEvaluate)
+
+add_library(libStrongerAI STATIC StrongerAI.hpp StrongerAI.cpp)
+target_include_directories(libStrongerAI PUBLIC ${OTHELLO_INCLUDE})
