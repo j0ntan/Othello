@@ -245,9 +245,7 @@ const OthelloBoard &GameState::board() const noexcept {
   return reference_board;
 }
 
-Board GameState::boardCopy() const noexcept {
-  return reference_board;
-}
+Board GameState::boardCopy() const noexcept { return reference_board; }
 
 int GameState::blackScore() const noexcept {
   return countTiles(board(), OthelloCell::black);
