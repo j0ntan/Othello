@@ -18,3 +18,6 @@ int AI::quickMoveEval(const std::pair<int, int> &move) {
       {-3, -4, -1, -1, -1, -1, -4, -3}, {4, -3, 2, 2, 2, 2, -3, 4}};
   return scores[move.second][move.first];
 }
+
+int AI::stronger::evaluate(const OthelloGameState *gameState,
+                           const OthelloCell &choosersTiles) {}

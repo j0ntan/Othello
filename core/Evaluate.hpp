@@ -12,6 +12,11 @@ namespace simple {
 int evaluate(const OthelloGameState *gameState,
              const OthelloCell &choosersTiles);
 } // namespace simple
+
+namespace stronger {
+int evaluate(const OthelloGameState *gameState,
+             const OthelloCell &choosersTiles);
+} // namespace stronger
 } // namespace AI
 
 #endif // EVALUATE_HPP

@@ -31,8 +31,19 @@ target_link_libraries(testSimpleEvaluate
         PUBLIC testgtestmain
         PUBLIC gtest)
 
+add_executable(testStrongerEvaluate testStrongerEvaluate.cpp)
+target_include_directories(testStrongerEvaluate
+        PUBLIC ${CMAKE_SOURCE_DIR}
+        PUBLIC ${gtest_SOURCE_DIR}/include)
+target_link_libraries(testStrongerEvaluate
+        PUBLIC libEvaluate
+        PUBLIC libGameState
+        PUBLIC libBoard
+        PUBLIC testgtestmain
+        PUBLIC gtest)
+
 add_executable(testRunAll gtestmain.cpp testBoard.cpp testGameState.cpp
-        testSimpleEvaluate.cpp)
+        testSimpleEvaluate.cpp testStrongerEvaluate.cpp)
 target_include_directories(testRunAll
         PUBLIC ${CMAKE_SOURCE_DIR}
         PUBLIC ${gtest_SOURCE_DIR}/include)
