@@ -25,6 +25,7 @@ target_include_directories(testSimpleEvaluate
         PUBLIC ${CMAKE_SOURCE_DIR}
         PUBLIC ${gtest_SOURCE_DIR}/include)
 target_link_libraries(testSimpleEvaluate
+        PUBLIC libEvaluate
         PUBLIC libGameState
         PUBLIC libBoard
         PUBLIC testgtestmain
@@ -36,6 +37,7 @@ target_include_directories(testRunAll
         PUBLIC ${CMAKE_SOURCE_DIR}
         PUBLIC ${gtest_SOURCE_DIR}/include)
 target_link_libraries(testRunAll
+        PUBLIC libEvaluate
         PUBLIC libGameState
         PUBLIC libBoard
         PUBLIC gtest)
