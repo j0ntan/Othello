@@ -1,20 +1,14 @@
 #include "SimpleAI.hpp"
+#include "core/Evaluate.hpp"
 #include "core/GameState.hpp"
 #include <cstdlib>
 #include <ctime>
 
 namespace {
-int eval(const OthelloGameState *s, const OthelloCell &choosersTiles) {
-  if (choosersTiles == OthelloCell::black)
-    return s->blackScore() - s->whiteScore();
-  else
-    return s->whiteScore() - s->blackScore();
-}
-
 int search(OthelloGameState *s, int depth, bool myTurn,
            const OthelloCell &choosersTiles) {
   if (depth == 0)
-    return eval(s, choosersTiles);
+    return AI::simple::evaluate(s, choosersTiles);
   else {
     if (myTurn) {
       int max_score = -64;
@@ -27,7 +21,7 @@ int search(OthelloGameState *s, int depth, bool myTurn,
             max_score = std::max(score, max_score);
           }
       if (max_score == -64)
-        return eval(s, choosersTiles);
+        return AI::simple::evaluate(s, choosersTiles);
       else
         return max_score;
     } else {
@@ -40,7 +34,7 @@ int search(OthelloGameState *s, int depth, bool myTurn,
             min_score = std::min(score, min_score);
           }
       if (min_score == 64)
-        return eval(s, choosersTiles);
+        return AI::simple::evaluate(s, choosersTiles);
       else
         return min_score;
     }
