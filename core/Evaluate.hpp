@@ -16,6 +16,8 @@ int evaluate(const OthelloGameState *gameState,
 namespace stronger {
 int evaluate(const OthelloGameState *gameState,
              const OthelloCell &choosersTiles);
+
+int mobilityScore(const OthelloGameState *gameState);
 } // namespace stronger
 } // namespace AI
 
