@@ -61,5 +61,10 @@ int AI::stronger::evaluate(const OthelloGameState *gameState,
                            const OthelloCell &choosersTiles) {
   int score = 0;
   score += mobilityScore(gameState);
+
+  if ((gameState->isBlackTurn() && choosersTiles == OthelloCell::white) ||
+      (gameState->isWhiteTurn() && choosersTiles == OthelloCell::black))
+    score *= -1;
+
   return score;
 }

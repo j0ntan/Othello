@@ -52,3 +52,23 @@ TEST(testStrongerEvaluate, blackScoresHigherMobilityForAdvantageousBoard) {
   EXPECT_GT(AI::stronger::evaluate(&gameState3, OthelloCell::black),
             AI::stronger::evaluate(&gameState4, OthelloCell::white));
 }
+
+TEST(testStrongerEvaluate, negativeScoreWhenCurrentPlayerIsNotChooser) {
+  const char cells[8][8] = {{' ', 'w', 'w', 'w', 'w', 'w', 'w', ' '},
+                            {' ', ' ', 'w', 'w', 'w', 'w', ' ', ' '},
+                            {'w', 'w', 'b', 'w', 'w', 'b', 'w', ' '},
+                            {'w', 'w', 'b', 'w', 'w', 'w', 'w', ' '},
+                            {'w', 'w', 'b', 'b', 'b', 'w', ' ', ' '},
+                            {' ', 'w', 'w', 'w', 'b', 'w', ' ', ' '},
+                            {' ', ' ', 'w', 'b', 'w', 'w', ' ', ' '},
+                            {' ', ' ', 'w', 'w', ' ', 'w', ' ', ' '}};
+  Board board;
+  for (int x = 0; x < 8; ++x)
+    for (int y = 0; y < 8; ++y)
+      if (cells[y][x] == 'b')
+        board.setCellAt(x, y, OthelloCell::black);
+      else if (cells[y][x] == 'w')
+        board.setCellAt(x, y, OthelloCell::white);
+  GameState gameState(board, false);
+  EXPECT_LE(AI::stronger::evaluate(&gameState, OthelloCell::black), 0);
+}
