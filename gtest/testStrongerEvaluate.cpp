@@ -47,8 +47,8 @@ TEST(testStrongerEvaluate, blackScoresHigherMobilityForAdvantageousBoard) {
     }
   GameState gameState1(board1), gameState2(board1, false), gameState3(board2),
       gameState4(board2, false);
-  EXPECT_GT(AI::stronger::mobilityScore(&gameState1),
-            AI::stronger::mobilityScore(&gameState2));
-  EXPECT_GT(AI::stronger::mobilityScore(&gameState3),
-            AI::stronger::mobilityScore(&gameState4));
+  EXPECT_GT(AI::stronger::evaluate(&gameState1, OthelloCell::black),
+            AI::stronger::evaluate(&gameState2, OthelloCell::white));
+  EXPECT_GT(AI::stronger::evaluate(&gameState3, OthelloCell::black),
+            AI::stronger::evaluate(&gameState4, OthelloCell::white));
 }
