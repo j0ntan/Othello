@@ -32,39 +32,44 @@ int search(OthelloGameState *s, int depth, bool myTurn,
   else {
     if (myTurn) {
       int max_score = -64;
-      for (int x = 0; x < s->board().width(); ++x)
-        for (int y = 0; y < s->board().height(); ++y)
-          if (s->isValidMove(x, y)) {
-            std::unique_ptr<OthelloGameState> clone = s->clone();
-            clone->makeMove(x, y);
-            int score = search(clone.get(), depth - 1, !myTurn, choosersTiles,
-                               alpha, beta);
-            max_score = std::max(score, max_score);
-            alpha = std::max(alpha, max_score);
-            if (beta <= alpha)
-              return max_score;
-          }
+      auto available_moves = findAvailableMoves(*s);
+      std::sort(std::begin(available_moves), std::end(available_moves),
+                compareMoves);
+      std::reverse(std::begin(available_moves), std::end(available_moves));
+      for (const auto &move : available_moves) {
+        const auto &x = move.first;
+        const auto &y = move.second;
+        std::unique_ptr<OthelloGameState> clone = s->clone();
+        clone->makeMove(x, y);
+        int score =
+            search(clone.get(), depth - 1, !myTurn, choosersTiles, alpha, beta);
+        max_score = std::max(score, max_score);
+        alpha = std::max(alpha, max_score);
+        if (beta <= alpha)
+          return max_score;
+      }
       if (max_score == -64)
         return AI::simple::evaluate(s, choosersTiles);
       else
         return max_score;
     } else {
       int min_score = 64;
-      for (int x = 0; x < s->board().width(); ++x)
-        for (int y = 0; y < s->board().height(); ++y)
-          if (s->isValidMove(x, y)) {
-            s->makeMove(x, y);
-            int score =
-                search(s, depth - 1, !myTurn, choosersTiles, alpha, beta);
-            min_score = std::min(score, min_score);
-            beta = std::min(beta, min_score);
-            if (beta <= alpha)
-              return min_score;
-          }
-      if (min_score == 64)
-        return AI::simple::evaluate(s, choosersTiles);
-      else
-        return min_score;
+      auto available_moves = findAvailableMoves(*s);
+      std::sort(std::begin(available_moves), std::end(available_moves),
+                compareMoves);
+      std::reverse(std::begin(available_moves), std::end(available_moves));
+      for (const auto &move : available_moves) {
+        const auto &x = move.first;
+        const auto &y = move.second;
+        std::unique_ptr<OthelloGameState> clone = s->clone();
+        clone->makeMove(x, y);
+        int score =
+            search(clone.get(), depth - 1, !myTurn, choosersTiles, alpha, beta);
+        min_score = std::min(score, min_score);
+        beta = std::min(beta, min_score);
+        if (beta <= alpha)
+          return min_score;
+      }
     }
   }
 }
