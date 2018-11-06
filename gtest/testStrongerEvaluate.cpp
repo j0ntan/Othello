@@ -72,3 +72,31 @@ TEST(testStrongerEvaluate, negativeScoreWhenCurrentPlayerIsNotChooser) {
   GameState gameState(board, false);
   EXPECT_LE(AI::stronger::evaluate(&gameState, OthelloCell::black), 0);
 }
+
+TEST(testStrongerEvaluate, occupyingCornersIncreasesScore) {
+  int previous_score = 0, current_score = 0;
+  Board board;
+
+  board.setCellAt(0, 0, OthelloCell::black);
+  GameState gameState1(board);
+  current_score = AI::stronger::stableScore(&gameState1);
+  EXPECT_GT(current_score, previous_score);
+
+  board.setCellAt(7, 0, OthelloCell::black);
+  GameState gameState2(board);
+  previous_score = current_score;
+  current_score = AI::stronger::stableScore(&gameState2);
+  EXPECT_GT(current_score, previous_score);
+
+  board.setCellAt(0, 7, OthelloCell::black);
+  GameState gameState3(board);
+  previous_score = current_score;
+  current_score = AI::stronger::stableScore(&gameState3);
+  EXPECT_GT(current_score, previous_score);
+
+  board.setCellAt(7, 7, OthelloCell::black);
+  GameState gameState4(board);
+  previous_score = current_score;
+  current_score = AI::stronger::stableScore(&gameState4);
+  EXPECT_GT(current_score, previous_score);
+}

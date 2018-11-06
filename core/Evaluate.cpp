@@ -33,6 +33,22 @@ inline int mobilityScore(const OthelloGameState *gameState) {
                               opponent_cell_left || opponent_cell_right))
           score += potential_cell_value;
       }
+  return score;
+}
+
+inline int scoreCornerCells(const OthelloGameState *gameState,
+                            const OthelloCell &currentPlayer) {
+  const int corner_cell_value = 4;
+  int score = 0;
+
+  if (gameState->board().cellAt(0, 0) == currentPlayer)
+    score += corner_cell_value;
+  if (gameState->board().cellAt(0, 7) == currentPlayer)
+    score += corner_cell_value;
+  if (gameState->board().cellAt(7, 0) == currentPlayer)
+    score += corner_cell_value;
+  if (gameState->board().cellAt(7, 7) == currentPlayer)
+    score += corner_cell_value;
 
   return score;
 }
@@ -67,4 +83,10 @@ int AI::stronger::evaluate(const OthelloGameState *gameState,
     score *= -1;
 
   return score;
+}
+
+int AI::stronger::stableScore(const OthelloGameState *gameState) {
+  const OthelloCell current_player =
+      gameState->isBlackTurn() ? OthelloCell::black : OthelloCell::white;
+  return scoreCornerCells(gameState, current_player);
 }
