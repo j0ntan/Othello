@@ -100,3 +100,13 @@ TEST(testStrongerEvaluate, occupyingCornersIncreasesScore) {
   current_score = AI::stronger::stableScore(&gameState4);
   EXPECT_GT(current_score, previous_score);
 }
+
+TEST(testStrongerEvaluate, negativeScoreWhenOpponentHasMoreCorners) {
+  Board board;
+  board.setCellAt(0, 0, OthelloCell::black);
+  board.setCellAt(7, 0, OthelloCell::white);
+  board.setCellAt(0, 7, OthelloCell::white);
+  board.setCellAt(7, 7, OthelloCell::white);
+  GameState gameState(board);
+  EXPECT_LT(AI::stronger::stableScore(&gameState), 0);
+}
