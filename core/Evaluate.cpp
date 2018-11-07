@@ -61,6 +61,54 @@ inline int scoreCornerCells(const OthelloGameState *gameState,
 
   return score;
 }
+
+inline int continuousRow(const OthelloGameState *gameState,
+                         const OthelloCell targetCell, const int searchStartX,
+                         const int searchStartY) {
+  int continuous_begin = searchStartX;
+  while (gameState->board().isValidCell(continuous_begin, searchStartY) &&
+         gameState->board().cellAt(continuous_begin, searchStartY) !=
+             targetCell)
+    ++continuous_begin;
+
+  int continuous_end = continuous_begin;
+  while (gameState->board().isValidCell(continuous_end, searchStartY) &&
+         gameState->board().cellAt(continuous_end, searchStartY) == targetCell)
+    ++continuous_end;
+
+  return continuous_end - continuous_begin;
+}
+
+inline int continuousCol(const OthelloGameState *gameState,
+                         const OthelloCell targetCell, const int searchStartX,
+                         const int searchStartY) {
+  int continuous_begin = searchStartY;
+  while (gameState->board().isValidCell(searchStartX, continuous_begin) &&
+         gameState->board().cellAt(searchStartX, continuous_begin) !=
+             targetCell)
+    ++continuous_begin;
+
+  int continuous_end = continuous_begin;
+  while (gameState->board().isValidCell(searchStartX, continuous_end) &&
+         gameState->board().cellAt(searchStartX, continuous_end) == targetCell)
+    ++continuous_end;
+
+  return continuous_end - continuous_begin;
+}
+
+inline int scoreAdjacentStableCells(const OthelloGameState *gameState,
+                                    const OthelloCell &currentPlayer) {
+  const int adjacent_stable_value = 2;
+  int adjacent_stable_count = 0;
+
+  // look at top-left
+  for (int i = 0; i < 4; ++i) {
+    adjacent_stable_count += continuousRow(gameState, currentPlayer, i + 1, i);
+    adjacent_stable_count += continuousCol(gameState, currentPlayer, i, i + 1);
+  }
+
+  return adjacent_stable_count * adjacent_stable_value;
+}
 } // namespace
 
 int AI::simple::evaluate(const OthelloGameState *gameState,
@@ -100,5 +148,10 @@ int AI::stronger::stableScore(const OthelloGameState *gameState) {
   const OthelloCell opponent = current_player == OthelloCell::black
                                    ? OthelloCell::white
                                    : OthelloCell::black;
-  return scoreCornerCells(gameState, current_player, opponent);
+  int score = 0;
+
+  score += scoreCornerCells(gameState, current_player, opponent);
+  score += scoreAdjacentStableCells(gameState, current_player);
+
+  return score;
 }

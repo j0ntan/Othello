@@ -110,3 +110,26 @@ TEST(testStrongerEvaluate, negativeScoreWhenOpponentHasMoreCorners) {
   GameState gameState(board);
   EXPECT_LT(AI::stronger::stableScore(&gameState), 0);
 }
+
+TEST(testStrongerEvaluate, detectStableCellsInTopLeftCorner) {
+  Board board;
+  board.setCellAt(0, 0, OthelloCell::black);
+  GameState gameState_just_the_corner(board);
+
+  const char cells[8][8] = {{'b', 'b', 'b', 'b', 'b', 'b', ' ', ' '},
+                            {'b', 'b', 'b', ' ', ' ', ' ', ' ', ' '},
+                            {'b', 'b', ' ', ' ', ' ', ' ', ' ', ' '},
+                            {'b', 'b', ' ', ' ', ' ', ' ', ' ', ' '},
+                            {'b', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                            {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                            {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                            {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}};
+  for (int x = 0; x < 8; ++x)
+    for (int y = 0; y < 8; ++y)
+      if (cells[y][x] == 'b')
+        board.setCellAt(x, y, OthelloCell::black);
+  GameState gameState_adjacent_stable_cells(board);
+
+  EXPECT_GT(AI::stronger::stableScore(&gameState_adjacent_stable_cells),
+            AI::stronger::stableScore(&gameState_just_the_corner));
+}
