@@ -114,6 +114,24 @@ inline int continuousRowReverse(const OthelloGameState *gameState,
   return continuous_begin - continuous_end;
 }
 
+inline int continuousColReverse(const OthelloGameState *gameState,
+                                const OthelloCell targetCell,
+                                const int searchStartX,
+                                const int searchStartY) {
+  int continuous_begin = searchStartY;
+  while (gameState->board().isValidCell(searchStartX, continuous_begin) &&
+         gameState->board().cellAt(searchStartX, continuous_begin) !=
+             targetCell)
+    --continuous_begin;
+
+  int continuous_end = continuous_begin;
+  while (gameState->board().isValidCell(searchStartX, continuous_end) &&
+         gameState->board().cellAt(searchStartX, continuous_end) == targetCell)
+    --continuous_end;
+
+  return continuous_begin - continuous_end;
+}
+
 inline int scoreAdjacentStableCells(const OthelloGameState *gameState,
                                     const OthelloCell &currentPlayer) {
   const int adjacent_stable_value = 2;
@@ -133,6 +151,15 @@ inline int scoreAdjacentStableCells(const OthelloGameState *gameState,
         continuousRowReverse(gameState, currentPlayer, 7 - i - 1, i);
     adjacent_stable_count +=
         continuousCol(gameState, currentPlayer, 7 - i, i + 1);
+  }
+
+  // look at bottom-left
+  for (int i = 0; i < 4 && gameState->board().cellAt(i, 7 - i) == currentPlayer;
+       ++i) {
+    adjacent_stable_count +=
+        continuousRow(gameState, currentPlayer, i + 1, 7 - i);
+    adjacent_stable_count +=
+        continuousColReverse(gameState, currentPlayer, i, 7 - i - 1);
   }
 
   return adjacent_stable_count * adjacent_stable_value;
