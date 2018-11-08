@@ -102,7 +102,8 @@ inline int scoreAdjacentStableCells(const OthelloGameState *gameState,
   int adjacent_stable_count = 0;
 
   // look at top-left
-  for (int i = 0; i < 4; ++i) {
+  for (int i = 0; i < 4 && gameState->board().cellAt(i, i) == currentPlayer;
+       ++i) {
     adjacent_stable_count += continuousRow(gameState, currentPlayer, i + 1, i);
     adjacent_stable_count += continuousCol(gameState, currentPlayer, i, i + 1);
   }
