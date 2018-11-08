@@ -79,25 +79,25 @@ TEST(testStrongerEvaluate, occupyingCornersIncreasesScore) {
 
   board.setCellAt(0, 0, OthelloCell::black);
   GameState gameState1(board);
-  current_score = AI::stronger::stableScore(&gameState1);
+  current_score = AI::stronger::evaluate(&gameState1, OthelloCell::black);
   EXPECT_GT(current_score, previous_score);
 
   board.setCellAt(7, 0, OthelloCell::black);
   GameState gameState2(board);
   previous_score = current_score;
-  current_score = AI::stronger::stableScore(&gameState2);
+  current_score = AI::stronger::evaluate(&gameState2, OthelloCell::black);
   EXPECT_GT(current_score, previous_score);
 
   board.setCellAt(0, 7, OthelloCell::black);
   GameState gameState3(board);
   previous_score = current_score;
-  current_score = AI::stronger::stableScore(&gameState3);
+  current_score = AI::stronger::evaluate(&gameState3, OthelloCell::black);
   EXPECT_GT(current_score, previous_score);
 
   board.setCellAt(7, 7, OthelloCell::black);
   GameState gameState4(board);
   previous_score = current_score;
-  current_score = AI::stronger::stableScore(&gameState4);
+  current_score = AI::stronger::evaluate(&gameState4, OthelloCell::black);
   EXPECT_GT(current_score, previous_score);
 }
 
@@ -108,7 +108,7 @@ TEST(testStrongerEvaluate, negativeScoreWhenOpponentHasMoreCorners) {
   board.setCellAt(0, 7, OthelloCell::white);
   board.setCellAt(7, 7, OthelloCell::white);
   GameState gameState(board);
-  EXPECT_LT(AI::stronger::stableScore(&gameState), 0);
+  EXPECT_LT(AI::stronger::evaluate(&gameState, OthelloCell::black), 0);
 }
 
 TEST(testStrongerEvaluate, detectStableCellsInTopLeftCorner) {
@@ -130,8 +130,10 @@ TEST(testStrongerEvaluate, detectStableCellsInTopLeftCorner) {
         board.setCellAt(x, y, OthelloCell::black);
   GameState gameState_adjacent_stable_cells(board);
 
-  EXPECT_GT(AI::stronger::stableScore(&gameState_adjacent_stable_cells),
-            AI::stronger::stableScore(&gameState_just_the_corner));
+  EXPECT_GT(
+      AI::stronger::evaluate(&gameState_adjacent_stable_cells,
+                             OthelloCell::black),
+      AI::stronger::evaluate(&gameState_just_the_corner, OthelloCell::black));
 }
 
 TEST(testStrongerEvaluate, zeroStableScoreForTopLeftEdgeWithoutCorner) {
@@ -150,7 +152,9 @@ TEST(testStrongerEvaluate, zeroStableScoreForTopLeftEdgeWithoutCorner) {
         board.setCellAt(x, y, OthelloCell::black);
   GameState gameState_adjacent_without_corner(board);
 
-  EXPECT_EQ(AI::stronger::stableScore(&gameState_adjacent_without_corner), 0);
+  EXPECT_EQ(AI::stronger::evaluate(&gameState_adjacent_without_corner,
+                                   OthelloCell::black),
+            0);
 }
 
 TEST(testStrongerEvaluate, detectStableCellsInTopRightCorner) {
@@ -172,8 +176,10 @@ TEST(testStrongerEvaluate, detectStableCellsInTopRightCorner) {
         board.setCellAt(x, y, OthelloCell::black);
   GameState gameState_adjacent_stable_cells(board);
 
-  EXPECT_GT(AI::stronger::stableScore(&gameState_adjacent_stable_cells),
-            AI::stronger::stableScore(&gameState_just_the_corner));
+  EXPECT_GT(
+      AI::stronger::evaluate(&gameState_adjacent_stable_cells,
+                             OthelloCell::black),
+      AI::stronger::evaluate(&gameState_just_the_corner, OthelloCell::black));
 }
 
 TEST(testStrongerEvaluate, detectStableCellsInBottomLeftCorner) {
@@ -195,8 +201,10 @@ TEST(testStrongerEvaluate, detectStableCellsInBottomLeftCorner) {
         board.setCellAt(x, y, OthelloCell::black);
   GameState gameState_adjacent_stable_cells(board);
 
-  EXPECT_GT(AI::stronger::stableScore(&gameState_adjacent_stable_cells),
-            AI::stronger::stableScore(&gameState_just_the_corner));
+  EXPECT_GT(
+      AI::stronger::evaluate(&gameState_adjacent_stable_cells,
+                             OthelloCell::black),
+      AI::stronger::evaluate(&gameState_just_the_corner, OthelloCell::black));
 }
 
 TEST(testStrongerEvaluate, detectStableCellsInBottomRightCorner) {
@@ -218,6 +226,8 @@ TEST(testStrongerEvaluate, detectStableCellsInBottomRightCorner) {
         board.setCellAt(x, y, OthelloCell::black);
   GameState gameState_adjacent_stable_cells(board);
 
-  EXPECT_GT(AI::stronger::stableScore(&gameState_adjacent_stable_cells),
-            AI::stronger::stableScore(&gameState_just_the_corner));
+  EXPECT_GT(
+      AI::stronger::evaluate(&gameState_adjacent_stable_cells,
+                             OthelloCell::black),
+      AI::stronger::evaluate(&gameState_just_the_corner, OthelloCell::black));
 }

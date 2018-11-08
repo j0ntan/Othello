@@ -173,6 +173,20 @@ inline int scoreAdjacentStableCells(const OthelloGameState *gameState,
 
   return adjacent_stable_count * adjacent_stable_value;
 }
+
+inline int stableScore(const OthelloGameState *gameState) {
+  const OthelloCell current_player =
+      gameState->isBlackTurn() ? OthelloCell::black : OthelloCell::white;
+  const OthelloCell opponent = current_player == OthelloCell::black
+                                   ? OthelloCell::white
+                                   : OthelloCell::black;
+  int score = 0;
+
+  score += scoreCornerCells(gameState, current_player, opponent);
+  score += scoreAdjacentStableCells(gameState, current_player);
+
+  return score;
+}
 } // namespace
 
 int AI::simple::evaluate(const OthelloGameState *gameState,
@@ -198,24 +212,11 @@ int AI::stronger::evaluate(const OthelloGameState *gameState,
                            const OthelloCell &choosersTiles) {
   int score = 0;
   score += mobilityScore(gameState);
+  score += stableScore(gameState);
 
   if ((gameState->isBlackTurn() && choosersTiles == OthelloCell::white) ||
       (gameState->isWhiteTurn() && choosersTiles == OthelloCell::black))
     score *= -1;
-
-  return score;
-}
-
-int AI::stronger::stableScore(const OthelloGameState *gameState) {
-  const OthelloCell current_player =
-      gameState->isBlackTurn() ? OthelloCell::black : OthelloCell::white;
-  const OthelloCell opponent = current_player == OthelloCell::black
-                                   ? OthelloCell::white
-                                   : OthelloCell::black;
-  int score = 0;
-
-  score += scoreCornerCells(gameState, current_player, opponent);
-  score += scoreAdjacentStableCells(gameState, current_player);
 
   return score;
 }
