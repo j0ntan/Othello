@@ -162,6 +162,15 @@ inline int scoreAdjacentStableCells(const OthelloGameState *gameState,
         continuousColReverse(gameState, currentPlayer, i, 7 - i - 1);
   }
 
+  // look at bottom-right
+  for (int i = 0;
+       i < 4 && gameState->board().cellAt(7 - i, 7 - i) == currentPlayer; ++i) {
+    adjacent_stable_count +=
+        continuousRowReverse(gameState, currentPlayer, 7 - i - 1, 7 - i);
+    adjacent_stable_count +=
+        continuousColReverse(gameState, currentPlayer, 7 - i, 7 - i - 1);
+  }
+
   return adjacent_stable_count * adjacent_stable_value;
 }
 } // namespace
