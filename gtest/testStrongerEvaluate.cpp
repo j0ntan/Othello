@@ -278,3 +278,28 @@ TEST(testStrongerEvaluate, excludeEdgeTilesAsFrontier) {
   EXPECT_GT(AI::stronger::frontierScore(&gameState_edge_tiles_only),
             AI::stronger::frontierScore(&gameState_frontier_added));
 }
+
+TEST(testStrongerEvaluate, flippingInteriorTilesKeepsSameScore) {
+  Board board;
+  const char cells[8][8] = {{' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                            {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                            {' ', 'b', 'b', 'b', 'b', ' ', ' ', ' '},
+                            {' ', 'w', 'w', 'w', 'b', ' ', ' ', ' '},
+                            {' ', 'w', 'w', 'w', 'b', ' ', ' ', ' '},
+                            {' ', 'w', 'w', 'w', 'b', ' ', ' ', ' '},
+                            {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                            {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}};
+  for (int x = 0; x < 8; ++x)
+    for (int y = 0; y < 8; ++y)
+      if (cells[y][x] == 'b')
+        board.setCellAt(x, y, OthelloCell::black);
+      else if (cells[y][x] == 'w')
+        board.setCellAt(x, y, OthelloCell::white);
+  GameState gameState_initial_frontier(board);
+
+  board.flipTile(3, 3);
+  GameState gameState_interior_flipped(board);
+
+  EXPECT_EQ(AI::stronger::frontierScore(&gameState_initial_frontier),
+            AI::stronger::frontierScore(&gameState_interior_flipped));
+}
