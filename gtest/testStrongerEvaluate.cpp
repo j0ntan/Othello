@@ -231,3 +231,22 @@ TEST(testStrongerEvaluate, detectStableCellsInBottomRightCorner) {
                              OthelloCell::black),
       AI::stronger::evaluate(&gameState_just_the_corner, OthelloCell::black));
 }
+
+TEST(testStrongerEvaluate, detectFrontierBlackTiles) {
+  Board board;
+  const char cells[8][8] = {{' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                            {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                            {' ', 'b', 'b', 'b', 'b', ' ', ' ', ' '},
+                            {' ', 'w', 'w', 'w', 'b', ' ', ' ', ' '},
+                            {' ', 'w', 'w', 'w', 'b', ' ', ' ', ' '},
+                            {' ', 'w', 'w', 'w', 'b', ' ', ' ', ' '},
+                            {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                            {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}};
+  for (int x = 0; x < 8; ++x)
+    for (int y = 0; y < 8; ++y)
+      if (cells[y][x] == 'b')
+        board.setCellAt(x, y, OthelloCell::black);
+  GameState gameState_adjacent_stable_cells(board);
+
+  EXPECT_LT(AI::stronger::frontierScore(&gameState_adjacent_stable_cells), 0);
+}

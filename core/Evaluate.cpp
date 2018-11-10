@@ -220,3 +220,7 @@ int AI::stronger::evaluate(const OthelloGameState *gameState,
 
   return score;
 }
+
+int AI::stronger::frontierScore(const OthelloGameState *gameState) {
+  return -1;
+}
