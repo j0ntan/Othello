@@ -53,7 +53,7 @@ TEST(testStrongerEvaluate, blackScoresHigherMobilityForAdvantageousBoard) {
             AI::stronger::evaluate(&gameState4, OthelloCell::white));
 }
 
-TEST(testStrongerEvaluate, negativeScoreWhenCurrentPlayerIsNotChooser) {
+TEST(testStrongerEvaluate, negatedScoreWhenCurrentPlayerIsNotChooser) {
   const char cells[8][8] = {{' ', 'w', 'w', 'w', 'w', 'w', 'w', ' '},
                             {' ', ' ', 'w', 'w', 'w', 'w', ' ', ' '},
                             {'w', 'w', 'b', 'w', 'w', 'b', 'w', ' '},
@@ -70,7 +70,8 @@ TEST(testStrongerEvaluate, negativeScoreWhenCurrentPlayerIsNotChooser) {
       else if (cells[y][x] == 'w')
         board.setCellAt(x, y, OthelloCell::white);
   GameState gameState(board, false);
-  EXPECT_LE(AI::stronger::evaluate(&gameState, OthelloCell::black), 0);
+  EXPECT_EQ(AI::stronger::evaluate(&gameState, OthelloCell::black),
+            AI::stronger::evaluate(&gameState, OthelloCell::white) * -1);
 }
 
 TEST(testStrongerEvaluate, occupyingCornersIncreasesScore) {
@@ -139,10 +140,10 @@ TEST(testStrongerEvaluate, detectStableCellsInTopLeftCorner) {
 TEST(testStrongerEvaluate, zeroStableScoreForTopLeftEdgeWithoutCorner) {
   Board board;
   const char cells[8][8] = {{' ', ' ', 'b', 'b', 'b', 'b', ' ', ' '},
-                            {'b', 'b', ' ', ' ', ' ', ' ', ' ', ' '},
-                            {'b', 'b', ' ', ' ', ' ', ' ', ' ', ' '},
-                            {'b', 'b', ' ', ' ', ' ', ' ', ' ', ' '},
-                            {'b', 'b', ' ', ' ', ' ', ' ', ' ', ' '},
+                            {'b', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                            {'b', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                            {'b', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                            {'b', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
                             {'b', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
                             {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
                             {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}};
