@@ -250,3 +250,31 @@ TEST(testStrongerEvaluate, detectFrontierBlackTiles) {
 
   EXPECT_LT(AI::stronger::frontierScore(&gameState_adjacent_stable_cells), 0);
 }
+
+TEST(testStrongerEvaluate, excludeEdgeTilesAsFrontier) {
+  Board board;
+  for (int i = 0; i < 8; ++i) {
+    board.setCellAt(i, 0, OthelloCell::black);
+    board.setCellAt(7, i, OthelloCell::black);
+    board.setCellAt(i, 7, OthelloCell::black);
+    board.setCellAt(0, i, OthelloCell::black);
+  }
+  GameState gameState_edge_tiles_only(board);
+
+  const char cells[8][8] = {{' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                            {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                            {' ', 'b', 'b', 'b', 'b', ' ', ' ', ' '},
+                            {' ', 'w', 'w', 'w', 'b', ' ', ' ', ' '},
+                            {' ', 'w', 'w', 'w', 'b', ' ', ' ', ' '},
+                            {' ', 'w', 'w', 'w', 'b', ' ', ' ', ' '},
+                            {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                            {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}};
+  for (int x = 0; x < 8; ++x)
+    for (int y = 0; y < 8; ++y)
+      if (cells[y][x] == 'b')
+        board.setCellAt(x, y, OthelloCell::black);
+  GameState gameState_frontier_added(board);
+
+  EXPECT_GT(AI::stronger::frontierScore(&gameState_edge_tiles_only),
+            AI::stronger::frontierScore(&gameState_frontier_added));
+}

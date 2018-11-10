@@ -222,5 +222,17 @@ int AI::stronger::evaluate(const OthelloGameState *gameState,
 }
 
 int AI::stronger::frontierScore(const OthelloGameState *gameState) {
-  return -1;
+  const OthelloCell current_player =
+          gameState->isBlackTurn() ? OthelloCell::black : OthelloCell::white;
+  int score = 0;
+
+  for (int x = 0; x < 8; ++x) {
+    for (int y = 0; y < 8; ++y) {
+      if (x != 0 && x != 7 && y != 0 && y != 7 &&
+          gameState->board().cellAt(x, y) == current_player)
+        --score;
+    }
+  }
+
+  return score;
 }
