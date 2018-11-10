@@ -187,6 +187,32 @@ inline int stableScore(const OthelloGameState *gameState) {
 
   return score;
 }
+
+inline int frontierScore(const OthelloGameState *gameState) {
+  const OthelloCell current_player =
+      gameState->isBlackTurn() ? OthelloCell::black : OthelloCell::white;
+  int score = 0;
+
+  for (int x = 0; x < 8; ++x) {
+    for (int y = 0; y < 8; ++y) {
+      if (x != 0 && x != 7 && y != 0 && y != 7 &&
+          gameState->board().cellAt(x, y) == current_player) {
+        const bool empty_above =
+            gameState->board().cellAt(x, y - 1) == OthelloCell::empty;
+        const bool empty_below =
+            gameState->board().cellAt(x, y + 1) == OthelloCell::empty;
+        const bool empty_left =
+            gameState->board().cellAt(x - 1, y) == OthelloCell::empty;
+        const bool empty_right =
+            gameState->board().cellAt(x + 1, y) == OthelloCell::empty;
+        if (empty_above || empty_below || empty_left || empty_right)
+          --score;
+      }
+    }
+  }
+
+  return score;
+}
 } // namespace
 
 int AI::simple::evaluate(const OthelloGameState *gameState,
@@ -213,36 +239,11 @@ int AI::stronger::evaluate(const OthelloGameState *gameState,
   int score = 0;
   score += mobilityScore(gameState);
   score += stableScore(gameState);
+  score += frontierScore(gameState);
 
   if ((gameState->isBlackTurn() && choosersTiles == OthelloCell::white) ||
       (gameState->isWhiteTurn() && choosersTiles == OthelloCell::black))
     score *= -1;
-
-  return score;
-}
-
-int AI::stronger::frontierScore(const OthelloGameState *gameState) {
-  const OthelloCell current_player =
-      gameState->isBlackTurn() ? OthelloCell::black : OthelloCell::white;
-  int score = 0;
-
-  for (int x = 0; x < 8; ++x) {
-    for (int y = 0; y < 8; ++y) {
-      if (x != 0 && x != 7 && y != 0 && y != 7 &&
-          gameState->board().cellAt(x, y) == current_player) {
-        const bool empty_above =
-            gameState->board().cellAt(x, y - 1) == OthelloCell::empty;
-        const bool empty_below =
-            gameState->board().cellAt(x, y + 1) == OthelloCell::empty;
-        const bool empty_left =
-            gameState->board().cellAt(x - 1, y) == OthelloCell::empty;
-        const bool empty_right =
-            gameState->board().cellAt(x + 1, y) == OthelloCell::empty;
-        if (empty_above || empty_below || empty_left || empty_right)
-          --score;
-      }
-    }
-  }
 
   return score;
 }

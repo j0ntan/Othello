@@ -248,7 +248,9 @@ TEST(testStrongerEvaluate, detectFrontierBlackTiles) {
         board.setCellAt(x, y, OthelloCell::black);
   GameState gameState_adjacent_stable_cells(board);
 
-  EXPECT_LT(AI::stronger::frontierScore(&gameState_adjacent_stable_cells), 0);
+  EXPECT_LT(AI::stronger::evaluate(&gameState_adjacent_stable_cells,
+                                   OthelloCell::black),
+            0);
 }
 
 TEST(testStrongerEvaluate, excludeEdgeTilesAsFrontier) {
@@ -275,8 +277,9 @@ TEST(testStrongerEvaluate, excludeEdgeTilesAsFrontier) {
         board.setCellAt(x, y, OthelloCell::black);
   GameState gameState_frontier_added(board);
 
-  EXPECT_GT(AI::stronger::frontierScore(&gameState_edge_tiles_only),
-            AI::stronger::frontierScore(&gameState_frontier_added));
+  EXPECT_GT(
+      AI::stronger::evaluate(&gameState_edge_tiles_only, OthelloCell::black),
+      AI::stronger::evaluate(&gameState_frontier_added, OthelloCell::black));
 }
 
 TEST(testStrongerEvaluate, flippingInteriorTilesKeepsSameScore) {
@@ -300,6 +303,7 @@ TEST(testStrongerEvaluate, flippingInteriorTilesKeepsSameScore) {
   board.flipTile(3, 3);
   GameState gameState_interior_flipped(board);
 
-  EXPECT_EQ(AI::stronger::frontierScore(&gameState_initial_frontier),
-            AI::stronger::frontierScore(&gameState_interior_flipped));
+  EXPECT_EQ(
+      AI::stronger::evaluate(&gameState_initial_frontier, OthelloCell::black),
+      AI::stronger::evaluate(&gameState_interior_flipped, OthelloCell::black));
 }
