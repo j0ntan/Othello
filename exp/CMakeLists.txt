@@ -7,4 +7,4 @@ target_include_directories(mainPlayGame PUBLIC ${CMAKE_SOURCE_DIR})
 target_link_libraries(mainPlayGame
         PUBLIC libBoard
         PUBLIC libGameState
-        PUBLIC libSimpleAI)
+        PUBLIC libStrongerAI)

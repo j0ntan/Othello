@@ -1,6 +1,6 @@
 #include "core/Board.hpp"
 #include "core/GameState.hpp"
-#include "core/SimpleAI.hpp"
+#include "core/StrongerAI.hpp"
 #include <cctype>
 #include <iostream>
 
@@ -72,8 +72,8 @@ void humanMakesMove(GameState &gameState) {
   std::cout << "(Enter the letter \'C\' to let the AI choose)\n";
   std::cin >> first_input;
   if (first_input == 'c' || first_input == 'C') {
-    SimpleAI simpleAI;
-    auto move = simpleAI.chooseMove(gameState);
+    StrongerAI strongerAI;
+    auto move = strongerAI.chooseMove(gameState);
     x = move.first;
     y = move.second;
 
@@ -101,8 +101,8 @@ void skipTurn(GameState &gameState, OthelloCell whichPlayer) {
 }
 
 void computerMakesMove(GameState &gameState) {
-  SimpleAI simpleAI;
-  auto chosen_move = simpleAI.chooseMove(gameState);
+  StrongerAI strongerAI;
+  auto chosen_move = strongerAI.chooseMove(gameState);
 
   std::cout << "Placing white tile @ (" << chosen_move.first << ", "
             << chosen_move.second << ")\n";
