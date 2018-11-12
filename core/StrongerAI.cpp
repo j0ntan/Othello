@@ -49,7 +49,7 @@ int search(OthelloGameState *s, int depth, bool myTurn,
           return max_score;
       }
       if (max_score == -64)
-        return AI::simple::evaluate(s, choosersTiles);
+        return AI::stronger::evaluate(s, choosersTiles);
       else
         return max_score;
     } else {
@@ -70,6 +70,10 @@ int search(OthelloGameState *s, int depth, bool myTurn,
         if (beta <= alpha)
           return min_score;
       }
+      if (min_score == 64)
+        return AI::stronger::evaluate(s, choosersTiles);
+      else
+        return min_score;
     }
   }
 }
